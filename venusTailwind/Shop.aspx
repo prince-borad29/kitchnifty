@@ -35,16 +35,15 @@
                     <a href="Product-detail.aspx" class="block w-full">
                         <img src="images/product-7.png" class="w-full h-full object-cover aspect-[4/3] rounded-lg" />
                     </a>
-                    <div class="p-4">
+                    <div class="pl-4 pt-14 pb-4">
                         <h3 class="text-lg font-semibold">Nordic Chair</h3>
                         <strong class="text-green-600">$50.00</strong>
-                        <div class="flex justify-between items-center mt-3">
+                        <%--<div class="flex justify-between items-center mt-3">
                             <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="~/images/shopping-bag.png" class="btn btn-primary btn-sm add-to-cart" />
                             <asp:ImageButton ID="ImageButton2" runat="server" class="btn btn-secondary btn-sm view-item" ImageUrl="~/images/view.png" />
-                        </div>
+                        </div>--%>
                     </div>
                 </div>
-
                 <!-- Add more product cards here -->
             </div>
         </div>
