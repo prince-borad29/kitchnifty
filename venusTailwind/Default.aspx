@@ -22,7 +22,7 @@
             <div>
                 <h2 class="text-2xl font-bold text-gray-900">Crafted with excellent material.</h2>
                 <p class="mt-4 text-gray-700">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit.</p>
-                <a href="shop.html" class="mt-4 inline-block bg-gray-900 text-white px-6 py-2 rounded-lg">Explore</a>
+                <a href="shop.aspx" class="mt-4 inline-block bg-gray-900 text-white px-6 py-2 rounded-lg">Explore</a>
             </div>
             
             <div class="bg-white p-4 rounded-lg shadow">
