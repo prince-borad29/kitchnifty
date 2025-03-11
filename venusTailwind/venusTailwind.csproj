@@ -71,9 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
-    <Content Include="App_Data\Database1.mdf" />
-    <Content Include="App_Data\Database1_log.ldf">
-      <DependentUpon>Database1.mdf</DependentUpon>
+    <Content Include="App_Data\Venus_db.mdf" />
+    <Content Include="App_Data\Venus_db_log.ldf">
+      <DependentUpon>Venus_db.mdf</DependentUpon>
     </Content>
     <Content Include="Cart.aspx" />
     <Content Include="Checkout.aspx" />
