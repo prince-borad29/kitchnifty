@@ -27,22 +27,33 @@
                         <div class="modal-body">
                             <div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Email address</label>
-                                    <asp:TextBox ID="TextBox3" class="form-control" runat="server"></asp:TextBox>
+                                    <label for="txtProductName">Product Name</label>
+                                    <asp:TextBox ID="txtProductName" class="form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Password</label>
-                                    <asp:TextBox ID="TextBox2" class="form-control" runat="server"></asp:TextBox>
+                                    <label for="txtProductPrice">Product Price</label>
+                                    <asp:TextBox ID="txtProductPrice" class="form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Color</label>
-                                    <asp:TextBox ID="TextBox1" class="form-control" runat="server"></asp:TextBox>
+                                    <label for="txtProductQty">Product Qty</label>
+                                    <asp:TextBox ID="txtProductQty" class="form-control" runat="server"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtProductDesc">Product Description</label>
+                                    <asp:TextBox ID="txtProductDesc" class="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+                                    <label for="imgMainProduct">Product Main Image</label>
+                                    <asp:FileUpload ID="imgMainProduct" runat="server" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="imgProducts">Product Images</label>
+                                    <asp:FileUpload ID="imgProducts" AllowMultiple="true" runat="server" />
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                                <%--<button type="submit" class="btn btn-primary">Submit</button>--%>
-                            <asp:Button ID="Button1" class="btn btn-primary" runat="server" Text="Add" />
+                            <asp:Button ID="btnAdd" class="btn btn-primary" runat="server" Text="Add" />
                         </div>
                     </div>
                 </div>

@@ -165,6 +165,11 @@ namespace venusTailwind
             cmd = new SqlCommand($"DELETE FROM Categories WHERE category_id = '{id}'",connection);
             int res = cmd.ExecuteNonQuery();
             return res;
-        }
+        } 
+
+        /*
+            PRODUCT SECTION  
+        */
+
     }
 }
