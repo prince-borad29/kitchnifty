@@ -71,7 +71,6 @@ namespace venusTailwind
             }
         }
 
-
         private bool VerifyPassword(string enteredPassword, string storedHash)
         {
             string hashedPassword = HashPassword(enteredPassword);
@@ -116,6 +115,56 @@ namespace venusTailwind
             {
                 return false;
             }
+        }
+
+
+        /*
+            CATEGORY SECTION 
+        */
+
+        public int addCategory(string cnm,string desc)
+        {
+            cmd = new SqlCommand($"INSERT INTO Categories(category_name,description,is_active) VALUES('{cnm}','{desc}','{true}')",connection);
+            int res = cmd.ExecuteNonQuery();
+            return res;
+        }
+
+        public DataSet fetchCategory()
+        {
+            ds = new DataSet();
+            da = new SqlDataAdapter("SELECT * FROM Categories", connection);
+            da.Fill(ds);
+
+            return ds;
+        }
+        public DataSet fetchCategory(int id)
+        {
+            ds = new DataSet();
+            da = new SqlDataAdapter($"SELECT * FROM Categories WHERE category_id = '{id}'", connection);
+            da.Fill(ds);
+
+            return ds;
+        }
+
+        public int updateCategory(int id, string cnm, string desc)
+        {
+            cmd = new SqlCommand($"UPDATE Categories SET category_name = '{cnm}' , description = '{desc}' WHERE category_id = '{id}' ",connection);
+            int res = cmd.ExecuteNonQuery();
+            return res;
+        }
+
+        public int isActiveCat(int id,bool status)
+        {
+            cmd = new SqlCommand($"UPDATE Categories SET is_activev = '{status}' WHERE category_id = '{id}' ", connection);
+            int res = cmd.ExecuteNonQuery();
+            return res;
+        }
+
+        public int deleteCategory(int id)
+        {
+            cmd = new SqlCommand($"DELETE FROM Categories WHERE category_id = '{id}'",connection);
+            int res = cmd.ExecuteNonQuery();
+            return res;
         }
     }
 }

@@ -6,13 +6,13 @@
 <head runat="server">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registration</title>
+    <title>Signup</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 </head>
 <body class="flex items-center justify-center min-h-screen bg-gray-100">
     <div class="w-full max-w-lg bg-white shadow-lg rounded-lg p-6">
-        <h2 class="text-2xl font-bold text-center text-gray-700 mb-4">Registration</h2>
+        <h2 class="text-2xl font-bold text-center text-gray-700 mb-4">Sign Up</h2>
         <form runat="server" class="space-y-4">
             <div>
                 <label for="txtFullName" class="block text-gray-600">Full Name</label>
