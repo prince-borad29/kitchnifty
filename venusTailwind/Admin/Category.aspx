@@ -26,22 +26,18 @@
                         <div class="modal-body">
                             <div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Email address</label>
-                                    <asp:TextBox ID="TextBox3" class="form-control" runat="server"></asp:TextBox>
+                                    <label for="txtcat_name">Name</label>
+                                    <asp:TextBox ID="txtcat_name" class="form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Password</label>
-                                    <asp:TextBox ID="TextBox2" class="form-control" runat="server"></asp:TextBox>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Color</label>
-                                    <asp:TextBox ID="TextBox1" class="form-control" runat="server"></asp:TextBox>
+                                    <label for="txtcat_desc">Description</label>
+                                    <asp:TextBox ID="txtcat_desc" class="form-control" TextMode="MultiLine" runat="server"></asp:TextBox>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                                 <%--<button type="submit" class="btn btn-primary">Submit</button>--%>
-                            <asp:Button ID="Button1" class="btn btn-primary" runat="server" Text="Add" />
+                            <asp:Button ID="Button1" class="btn btn-success" runat="server" Text="Add" />
                         </div>
                     </div>
                 </div>
@@ -50,7 +46,7 @@
 
 
         <!-- DataTales Example -->
-        <div class="card shadow mb-4">
+        <%--<div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Category List</h6>
             </div>
@@ -59,12 +55,10 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>Id</th>
                                 <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Desc</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
 
@@ -73,20 +67,44 @@
                                 <td>Tiger Nixon</td>
                                 <td>System Architect</td>
                                 <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                                <td>2011/07/25</td>
-                                <td>$170,750</td>
+                                <td>61</td> 
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>--%>
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Category List</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <asp:GridView ID="gvCategory" runat="server" CssClass="table table-bordered" Width="100%"
+                        AutoGenerateColumns="False" GridLines="None">
+
+                        <Columns>
+                            <asp:TemplateField HeaderText="Id">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label1" runat="server" Text='<%# Eval("category_id") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Name">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label2" runat="server" Text='<%# Eval("category_name") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Description">
+                                <ItemTemplate>
+                                    <asp:Label ID="Label3" runat="server" Text='<%# Eval("description") %>'></asp:Label>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:CheckBoxField Text="Status" />
+                        </Columns>
+
+                        <HeaderStyle CssClass="thead-dark" />
+                    </asp:GridView>
                 </div>
             </div>
         </div>
