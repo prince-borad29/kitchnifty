@@ -16,6 +16,8 @@ namespace venusTailwind
         private SqlConnection connection;
         private SqlDataAdapter da;
         private DataSet ds;
+        SqlDataReader dr;
+
         private string connectionString = ConfigurationManager.ConnectionStrings["dbconnect"].ConnectionString;
         public DBConnect()
         {
@@ -174,7 +176,7 @@ namespace venusTailwind
         {
             cmd = new SqlCommand($"INSERT INTO Products(product_name,category_id,price,description,image_url,video_url,is_active) Values('{productName}', '{catId}', '{price}', '{desc}', '{img}', '{video}' , '{true}'); ", connection);
 
-            return cmd.ExecuteNonQuery();
+            return Convert.ToInt32(cmd.ExecuteScalar());
         }
 
         //when updating image and video both
@@ -213,7 +215,7 @@ namespace venusTailwind
         }
 
         //add other images of product
-        public int addOtherImgs(int productId,string otherImgUrls)
+        public int addOtherImgs(int productId, string otherImgUrls)
         {
             int res = 0;
 
@@ -221,14 +223,82 @@ namespace venusTailwind
             int len = splitted.Length;
             for (int i = 0; i < len; i++)
             {
-                cmd = new SqlCommand($"INSERT INTO ProductImages(image_id,product_id,image_url) VALUES('{productId}' , '{splitted[i]}');", connection);
-                 int effectded = cmd.ExecuteNonQuery();
+                cmd = new SqlCommand($"INSERT INTO ProductImages(product_id,image_url) VALUES('{productId}' , '{splitted[i]}');", connection);
+                int effectded = cmd.ExecuteNonQuery();
                 res += effectded;
             }
 
             return res;
         }
 
+        //product fetch fir repeater
+        public List<Product> GetProduct()
+        {
+            List<Product> products = new List<Product>();
 
+            cmd = new SqlCommand("SELECT * FROM Products; SELECT * FROM ProductImages;", connection);
+
+            dr = cmd.ExecuteReader();
+
+            Dictionary<int, Product> productDictionary = new Dictionary<int, Product>();
+
+            while (dr.Read())
+            {
+                Product product = new Product
+                {
+                    Id = dr.GetInt32(0),
+                    name = dr.GetString(1),
+                    categoryId = dr.GetInt32(2),
+                    price = dr.GetDecimal(3),
+                    description = dr.GetString(4),
+                    img = dr.GetString(5),
+                    video = dr.GetString(6),
+                    is_active = dr.GetBoolean(7),
+                    otherImgs = new List<ProductOtherImages>()
+                };
+
+                productDictionary[product.Id] = product;
+                products.Add(product);
+            }
+
+            if (dr.NextResult())
+            {
+                while (dr.Read())
+                {
+                    int product_id = dr.GetInt32(1);
+
+                    if (productDictionary.ContainsKey(product_id))
+                    {
+                        productDictionary[product_id].otherImgs.Add(new ProductOtherImages
+                        {
+                            Id = dr.GetInt32(0),
+                            imgurl = dr.GetString(2)
+                        });
+                    }
+                }
+            }
+
+            dr.Close();
+            return products;
+        }
     }
+}
+
+public class Product
+{
+    public int Id { get; set; }
+    public string name { get; set; }
+    public int categoryId { get; set; }
+    public decimal price { get; set; }
+    public string description { get; set; }
+    public string img { get; set; }
+    public string video { get; set; }
+    public bool is_active { get; set; }
+    public List<ProductOtherImages> otherImgs { get; set; }
+}
+
+public class ProductOtherImages
+{
+    public int Id { get; set; }
+    public string imgurl { get; set; }
 }

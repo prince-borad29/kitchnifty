@@ -78,27 +78,27 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <asp:Repeater ID="rptProduct" runat="server">
+                                <asp:Repeater OnItemDataBound="rptProduct_ItemDataBound" ID="rptProduct" runat="server">
                                     <ItemTemplate>
                                         <td> 
-                                            <asp:Label ID="lblProductName" runat="server" Text='<%#Eval("product_name") %>'></asp:Label>
+                                            <asp:Label ID="lblProductName" runat="server" Text='<%#Eval("name") %>'></asp:Label>
                                         </td>
                                         <td> 
                                             <asp:Label ID="lblProductPrice" runat="server" Text='<%#Eval("price") %>'></asp:Label>
                                         </td>
                                         <td>
-                                            <asp:Image ID="productMainImg" ImageUrl='<%#Eval("image_url") %>' runat="server" />
+                                            <asp:Image ID="productMainImg" Height="80" Width="80"  ImageUrl='<%#Eval("img") %>' runat="server" />
                                         </td>
                                         <td>
                                             <asp:Repeater ID="rptProductImg" runat="server">
                                                 <ItemTemplate>
-                                                    <asp:Image ID="productOtherImg" ImageUrl='<%#Eval("image_url") %>' runat="server" />
+                                                    <asp:Image ID="productOtherImg" Height="80" Width="80" ImageUrl='<%#Eval("imgurl") %>' runat="server" />
                                                 </ItemTemplate>
                                             </asp:Repeater>
                                         </td>
                                         <td>
                                             <video width="100" height="100" controls>
-                                                <source src='<%# Eval("video_url") %>' type="video/mp4"/>
+                                                <source src='<%# Eval("video") %>' type="video/mp4"/>
                                                 Can't Load Video
                                             </video>
                                         </td>

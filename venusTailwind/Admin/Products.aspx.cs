@@ -11,7 +11,7 @@ namespace venusTailwind.Admin
 {
     public partial class Products : System.Web.UI.Page
     {
-            DBConnect db = new DBConnect();
+        DBConnect db = new DBConnect();
         private string mainImageUrl = "" , videoUrl = "" , otherImagesUrls="";
         private DataSet ds;
         protected void Page_Load(object sender, EventArgs e)
@@ -20,10 +20,32 @@ namespace venusTailwind.Admin
             ds = db.fetchCategory();
 
             ddlCategory.DataSource = ds.Tables[0];
-            ddlCategory.DataTextField = "category_name"; 
-            ddlCategory.DataValueField = "category_id";  
+            ddlCategory.DataTextField = ds.Tables[0].Columns[1].ToString();
+            ddlCategory.DataValueField = ds.Tables[0].Columns[0].ToString();  
             ddlCategory.DataBind();
 
+            fillRepeater();
+
+        }
+
+        protected void rptProduct_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Product product = (Product)e.Item.DataItem;
+
+                Repeater rpt2 = (Repeater)e.Item.FindControl("rptProductImg");
+                rpt2.DataSource = product.otherImgs;
+                rpt2.DataBind();
+            }
+        }
+
+        void fillRepeater() {
+            List<Product> products = db.GetProduct();
+            //ViewState["products"] = products;
+
+            rptProduct.DataSource = products;
+            rptProduct.DataBind();
         }
 
         protected void btnAddProduct_Click(object sender, EventArgs e)
@@ -85,12 +107,12 @@ namespace venusTailwind.Admin
                     // Insert into Database
                     int productId = db.addProdcut(
                         txtProductName.Text,
-                        Convert.ToInt16(ddlCategory.DataValueField),
+                        Convert.ToInt16(ddlCategory.SelectedValue),
                         Convert.ToDecimal(txtProductPrice.Text),
                         txtProductDesc.Text,
                         mainImageUrl,
                         videoUrl
-                        ); // Add product name and main image
+                        ); 
 
 
                     int res = db.addOtherImgs(productId, otherImagesUrls); // Add multiple image URLs
@@ -103,8 +125,9 @@ namespace venusTailwind.Admin
                     {
                         Response.Write("<script>alert('Failed to Add Product. Please Try Again.')</script>");
                     }
-                }
 
+                    fillRepeater();
+                }
 
             }
             catch (Exception error)

@@ -2149,8 +2149,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="uploads\" />
-    <Folder Include="videos\" />
+    <Folder Include="Admin\uploads\" />
+    <Folder Include="Admin\videos\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
