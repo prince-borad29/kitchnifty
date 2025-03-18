@@ -122,9 +122,9 @@ namespace venusTailwind
             CATEGORY SECTION 
         */
 
-        public int addCategory(string cnm,string desc)
+        public int addCategory(string cnm, string desc)
         {
-            cmd = new SqlCommand($"INSERT INTO Categories(category_name,description,is_active) VALUES('{cnm}','{desc}','{true}')",connection);
+            cmd = new SqlCommand($"INSERT INTO Categories(category_name,description,is_active) VALUES('{cnm}','{desc}','{true}')", connection);
             int res = cmd.ExecuteNonQuery();
             return res;
         }
@@ -148,12 +148,12 @@ namespace venusTailwind
 
         public int updateCategory(int id, string cnm, string desc)
         {
-            cmd = new SqlCommand($"UPDATE Categories SET category_name = '{cnm}' , description = '{desc}' WHERE category_id = '{id}' ",connection);
+            cmd = new SqlCommand($"UPDATE Categories SET category_name = '{cnm}' , description = '{desc}' WHERE category_id = '{id}' ", connection);
             int res = cmd.ExecuteNonQuery();
             return res;
         }
 
-        public int isActiveCat(int id,bool status)
+        public int isActiveCat(int id, bool status)
         {
             cmd = new SqlCommand($"UPDATE Categories SET is_activev = '{status}' WHERE category_id = '{id}' ", connection);
             int res = cmd.ExecuteNonQuery();
@@ -162,14 +162,73 @@ namespace venusTailwind
 
         public int deleteCategory(int id)
         {
-            cmd = new SqlCommand($"DELETE FROM Categories WHERE category_id = '{id}'",connection);
+            cmd = new SqlCommand($"DELETE FROM Categories WHERE category_id = '{id}'", connection);
             int res = cmd.ExecuteNonQuery();
             return res;
-        } 
+        }
 
         /*
             PRODUCT SECTION  
         */
+        public int addProdcut(string productName, int catId, decimal price, string desc, string img, string video)
+        {
+            cmd = new SqlCommand($"INSERT INTO Products(product_name,category_id,price,description,image_url,video_url,is_active) Values('{productName}', '{catId}', '{price}', '{desc}', '{img}', '{video}' , '{true}'); ", connection);
+
+            return cmd.ExecuteNonQuery();
+        }
+
+        //when updating image and video both
+        public int updateProduct(int productId, string productName, int catId, decimal price, string desc, string img, string video)
+        {
+            cmd = new SqlCommand($"UPDATE Products SET product_name='{productName}' ,category_id='{catId}',price='{price}',description='{desc}' , image_url = '{img}' , video_url = '{video}' WHERE product_id = '{productId}';", connection);
+
+            return cmd.ExecuteNonQuery();
+        }
+
+        //when img and video is not needed to update
+        public int updateProduct(int productId, string productName, int catId, decimal price, string desc)
+        {
+            cmd = new SqlCommand($"UPDATE Products SET product_name='{productName}' ,category_id='{catId}',price='{price}',description='{desc}' WHERE product_id = '{productId}';", connection);
+
+            return cmd.ExecuteNonQuery();
+        }
+
+        //handling that one of img or video is need to updated 
+        public int updateProduct(int productId, string productName, int catId, decimal price, string desc, string fileUrl, bool type)
+        {
+            //if type is true update img
+            if (type)
+            {
+                cmd = new SqlCommand($"UPDATE Products SET product_name='{productName}' ,category_id='{catId}',price='{price}',description='{desc}' , image_url = '{fileUrl}'  WHERE product_id = '{productId}';", connection);
+
+            }
+            //if type is false update video
+            else
+            {
+                cmd = new SqlCommand($"UPDATE Products SET product_name='{productName}' ,category_id='{catId}',price='{price}',description='{desc}' , video_url = '{fileUrl}'  WHERE product_id = '{productId}';", connection);
+
+            }
+
+            return cmd.ExecuteNonQuery();
+        }
+
+        //add other images of product
+        public int addOtherImgs(int productId,string otherImgUrls)
+        {
+            int res = 0;
+
+            string[] splitted = otherImgUrls.ToString().Split(' ');
+            int len = splitted.Length;
+            for (int i = 0; i < len; i++)
+            {
+                cmd = new SqlCommand($"INSERT INTO ProductImages(image_id,product_id,image_url) VALUES('{productId}' , '{splitted[i]}');", connection);
+                 int effectded = cmd.ExecuteNonQuery();
+                res += effectded;
+            }
+
+            return res;
+        }
+
 
     }
 }

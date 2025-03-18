@@ -4,12 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace venusTailwind.Admin
 {
     public partial class Category : System.Web.UI.Page
     {
         DBConnect db;
+        DataSet ds;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             fillGrid();
@@ -17,8 +21,6 @@ namespace venusTailwind.Admin
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            if (btnSubmit.Text == "Add")
-            {
                 db = new DBConnect();
                 int insert = db.addCategory(txtcat_name.Text , txtcat_desc.Text);
                 if(insert > 0)
@@ -29,12 +31,7 @@ namespace venusTailwind.Admin
                 else
                 {
 
-                }              
-            }
-            else
-            {
-
-            }
+                }
         }
 
         void fillGrid()
@@ -43,6 +40,33 @@ namespace venusTailwind.Admin
 
             gvCategory.DataSource = db.fetchCategory();
             gvCategory.DataBind();
+        }
+
+        protected void btnEdit_Command(object sender, CommandEventArgs e)
+        {
+            ViewState["categoryId"] = e.CommandArgument;
+            ds = db.fetchCategory(Convert.ToInt32(ViewState["categoryId"]));
+
+            txtcat_update_name.Text = ds.Tables[0].Rows[0]["category_name"].ToString();
+            txtcat_update_desc.Text = ds.Tables[0].Rows[0]["description"].ToString();
+
+            string script = "<script>$(document).ready(function() { $('#exampleModalCenter2').modal('show'); });</script>";
+            ClientScript.RegisterStartupScript(this.GetType(), "ShowModal", script);
+
+        }
+
+        protected void btnDelete_Command(object sender, CommandEventArgs e)
+        {
+            ViewState["categoryId"] = e.CommandArgument;
+            db.deleteCategory(Convert.ToInt32(ViewState["categoryId"]));
+            fillGrid();
+        }
+
+        protected void updateModalBtn_Click(object sender, EventArgs e)
+        {
+            db.updateCategory(Convert.ToInt32(ViewState["categoryId"]), txtcat_update_name.Text,txtcat_update_desc.Text) ;
+
+            fillGrid();
         }
     }
 }

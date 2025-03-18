@@ -21,6 +21,17 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+      <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -32,7 +43,7 @@
 
                 <!-- Sidebar -->
                 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-                  
+
                     <!-- Sidebar - Brand -->
                     <div class="sidebar-brand d-flex align-items-center justify-content-center">
                         <div class="sidebar-brand-text mx-3">Venus Admin</div>
@@ -57,13 +68,13 @@
                             <i class="fas fa-fw fa-table"></i>
                             <span>Product</span></a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link" href="Category.aspx">
                             <i class="fas fa-fw fa-table"></i>
                             <span>Category</span></a>
                     </li>
-                    
+
                     <li class="nav-item">
                         <a class="nav-link" href="Users.aspx">
                             <i class="fas fa-fw fa-table"></i>
@@ -77,7 +88,7 @@
                     <div class="text-center d-none d-md-inline">
                         <button class="rounded-circle border-0" id="sidebarToggle"></button>
                     </div>
-                    
+
                 </ul>
                 <!-- End of Sidebar -->
 
@@ -210,17 +221,10 @@
                 </div>
             </div>
 
-            <!-- Bootstrap core JavaScript-->
-            <script src="vendor/jquery/jquery.min.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-            <!-- Core plugin JavaScript-->
-            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-            <!-- Custom scripts for all pages-->
-            <script src="js/sb-admin-2.min.js"></script>
-            
         </div>
     </form>
+  
 </body>
 </html>

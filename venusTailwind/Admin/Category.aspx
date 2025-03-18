@@ -41,38 +41,38 @@
                     </div>
                 </div>
             </div>
-        </div>
 
+            <!-- Update Modal -->
 
-        <!-- DataTales Example -->
-        <%--<div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Category List</h6>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Desc</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td> 
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="updateModalCenterTitle">Update Category</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="form-group">
+                                    <label for="txtcat_update_name">Name</label>
+                                    <asp:TextBox ID="txtcat_update_name" class="form-control" runat="server"></asp:TextBox>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtcat_update_desc">Description</label>
+                                    <asp:TextBox ID="txtcat_update_desc" class="form-control" TextMode="MultiLine" runat="server"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <asp:Button ID="updateModalBtn" class="btn btn-primary" runat="server" Text="Update" OnClick="updateModalBtn_Click" />
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>--%>
+
+        </div>
 
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -101,12 +101,12 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Edit">
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="LinkButton1" runat="server" CommandArgument='<%# Eval("category_id") %>' CommandName="cmd_edt">Edit</asp:LinkButton>
+                                    <asp:LinkButton ID="btnEdit" runat="server" CommandArgument='<%# Eval("category_id") %>' CommandName="cmd_edt" OnCommand="btnEdit_Command" >Edit</asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Delete">
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="LinkButton2" runat="server" CommandArgument='<%# Eval("category_id") %>' CommandName="cmd_dlt">Delete</asp:LinkButton>
+                                    <asp:LinkButton ID="btnDelete" runat="server" CommandArgument='<%# Eval("category_id") %>' CommandName="cmd_dlt" OnCommand="btnDelete_Command">Delete</asp:LinkButton>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
