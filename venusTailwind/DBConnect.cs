@@ -174,7 +174,7 @@ namespace venusTailwind
         */
         public int addProdcut(string productName, int catId, decimal price, string desc, string img, string video)
         {
-            cmd = new SqlCommand($"INSERT INTO Products(product_name,category_id,price,description,image_url,video_url,is_active) Values('{productName}', '{catId}', '{price}', '{desc}', '{img}', '{video}' , '{true}'); ", connection);
+            cmd = new SqlCommand($"INSERT INTO Products(product_name,category_id,price,description,image_url,video_url,is_active) Values('{productName}', '{catId}', '{price}', '{desc}', '{img}', '{video}' , '{true}'); SELECT SCOPE_IDENTITY();", connection);
 
             return Convert.ToInt32(cmd.ExecuteScalar());
         }
@@ -229,6 +229,96 @@ namespace venusTailwind
             }
 
             return res;
+        }
+
+        //update Other Image
+        public void updateOtherImg(int id, string imgPath)
+        {
+            cmd = new SqlCommand($"UPDATE ProductImages SET image_url='{imgPath}' WHERE image_id='{id}'", connection);
+            cmd.ExecuteNonQuery();
+        }
+
+        //delete Other Image
+        public void deleteOtherImg(int id)
+        {
+            cmd = new SqlCommand($"DELETE FROM ProductImages WHERE image_id='{id}'", connection);
+            cmd.ExecuteNonQuery();
+        }
+
+        //upload further other image
+
+        public List<string> deleteimgurls(int id)
+        {
+            List<string> imgurl = new List<string>();
+            SqlDataReader reader;
+            cmd = new SqlCommand($"SELECT * FROM ProductImages WHERE product_id ='{id}'", connection);
+            reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                imgurl.Add(reader["image_url"].ToString());
+            }
+
+            reader.Close();
+
+            return imgurl;
+        }
+
+        public int ImageCount(int id)
+        {
+            cmd = new SqlCommand($"select count(*) from ProductImages where product_id='{id}'", connection);
+            return Convert.ToInt32(cmd.ExecuteScalar());
+        }
+
+        public int uploadotherimage2(int product_id, string img)
+        {
+            try
+            {
+                cmd = new SqlCommand($"INSERT INTO ProductImages(product_id,image_url) VALUES('{product_id}' , '{img}')", connection);
+                int res = cmd.ExecuteNonQuery();
+
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                HttpContext.Current.Response.Write(ex);
+                return 0;
+            }
+        }
+
+        //delete Products
+        public void deleteProduct(int id)
+        {
+            cmd = new SqlCommand($"delete from Products where product_id='{id}';" +
+                $"delete from ProductImages where product_id ='{id}'", connection);
+
+            cmd.ExecuteNonQuery();
+        }
+
+        //update Video
+
+        public void updateVideo(int id, string video)
+        {
+            cmd = new SqlCommand($"update Products set video_url='{video}' where product_id='{id}';", connection);
+            cmd.ExecuteNonQuery();
+        }
+
+        public string GetvideoUrl(int id)
+        {
+
+            SqlDataReader readurl;
+            string videoUrl = null;
+
+            cmd = new SqlCommand($"select video_url from Products where product_id = '{id}';", connection);
+            readurl = cmd.ExecuteReader();
+
+            while (readurl.Read())
+            {
+                videoUrl = readurl.GetString(0);
+            }
+
+            readurl.Close();
+            return videoUrl;
         }
 
         //product fetch fir repeater
@@ -302,3 +392,4 @@ public class ProductOtherImages
     public int Id { get; set; }
     public string imgurl { get; set; }
 }
+

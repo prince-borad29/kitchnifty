@@ -72,6 +72,7 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="Admin\Category.aspx" />
+    <Content Include="Admin\css\custom.css" />
     <Content Include="Admin\css\sb-admin-2.css" />
     <Content Include="Admin\css\sb-admin-2.min.css" />
     <Content Include="Admin\Dashboard.aspx" />
