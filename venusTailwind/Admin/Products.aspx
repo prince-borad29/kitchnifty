@@ -13,7 +13,6 @@
 
         <!-- Product Modal -->
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -65,55 +64,185 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" width="100%" cellspacing="0">
-                        <thead>
+                    <asp:Repeater OnItemDataBound="rptProduct_ItemDataBound" ID="rptProduct" runat="server">
+                        <HeaderTemplate>
+                            <table class="table table-bordered table-striped table-hover align-middle text-center">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Main Image</th>
+                                        <th>Additional Images</th>
+                                        <th>Video</th>
+                                        <th>Description</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        </HeaderTemplate>
+                        <ItemTemplate>
                             <tr>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Image</th>
-                                <th>Images</th>
-                                <th>Video</th>
-                                <th>Description</th>
+                                <td>
+                                    <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("name") %>'></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblProductPrice" runat="server" Text='<%# Eval("price") %>'></asp:Label>
+                                </td>
+                                <td>
+                                    <img src='<%# Eval("img") %>' class="img-thumbnail" style="max-width: 100px; height: auto; object-fit: cover;" alt="Main Image" onclick="showImagePreview(this.src)" />
+
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-wrap gap-3">
+                                        <asp:Repeater ID="rptProductImg" runat="server">
+                                            <ItemTemplate>
+                                                <div class="text-center border p-2 rounded" style="width: 120px;">
+                                                    <img src='<%# Eval("imgurl") %>' class="img-thumbnail mb-2" style="width: 100%; height: 80px; object-fit: cover;" onclick="showImagePreview(this.src)" alt="Additional Image" />
+                                                    <div class="btn-group w-100" role="group">
+                                                        <asp:LinkButton ID="editOtherImage" CommandName='<%# Eval("imgurl") %>' CommandArgument='<%# Eval("Id") %>' OnCommand="editOtherImage_Command" runat="server" CssClass="btn btn-outline-primary btn-sm" title="Edit">
+                                            <i class="bi bi-pencil-square"></i>
+                                                        </asp:LinkButton>
+                                                        <asp:LinkButton ID="deleteOtherImage" CommandName='<%# Eval("imgurl") %>' CommandArgument='<%# Eval("Id") %>' OnCommand="deleteOtherImage_Command" runat="server" CssClass="btn btn-outline-danger btn-sm" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                                        </asp:LinkButton>
+                                                    </div>
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:Repeater>
+                                        <asp:LinkButton ID="otherImagesupload" CommandArgument='<%# Eval("Id") %>' runat="server" OnCommand="otherImagesupload_Command" CssClass="btn btn-outline-primary btn-sm" title="Add More">
+                            <i class="bi bi-plus-square"></i>
+                                        </asp:LinkButton>
+                                    </div>
+                                </td>
+                                <td>
+                                    <video width="150" height="100" controls>
+                                        <source src='<%# Eval("video") %>' type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <asp:LinkButton ID="video_edit" CommandName='<%# Eval("video") %>' CommandArgument='<%# Eval("Id") %>' OnCommand="video_edit_Command" runat="server" CssClass="btn btn-outline-primary btn-sm mt-2" title="Edit">
+                        <i class="bi bi-pencil-square"></i>
+                                    </asp:LinkButton>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblProductDescription" runat="server" Text='<%# Eval("description") %>'></asp:Label>
+                                </td>
+                                <td>
+                                    <div class="btn-group w-100" role="group">
+                                        <asp:LinkButton ID="editProduct" CommandName='<%# Eval("img") %>' CommandArgument='<%# Eval("Id") %>' OnCommand="editProduct_Command" runat="server" CssClass="btn btn-outline-primary btn-sm" title="Edit">
+                                        <i class="bi bi-pencil-square"></i>
+                                        </asp:LinkButton>
+                                        <asp:LinkButton ID="deleteProduct" CommandName='<%# Eval("img") %>' CommandArgument='<%# Eval("Id") %>' OnCommand="deleteProduct_Command" runat="server" CssClass="btn btn-outline-danger btn-sm" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                        </asp:LinkButton>
+                                    </div>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <asp:Repeater OnItemDataBound="rptProduct_ItemDataBound" ID="rptProduct" runat="server">
-                                    <ItemTemplate>
-                                        <td> 
-                                            <asp:Label ID="lblProductName" runat="server" Text='<%#Eval("name") %>'></asp:Label>
-                                        </td>
-                                        <td> 
-                                            <asp:Label ID="lblProductPrice" runat="server" Text='<%#Eval("price") %>'></asp:Label>
-                                        </td>
-                                        <td>
-                                            <asp:Image ID="productMainImg" Height="80" Width="80"  ImageUrl='<%#Eval("img") %>' runat="server" />
-                                        </td>
-                                        <td>
-                                            <asp:Repeater ID="rptProductImg" runat="server">
-                                                <ItemTemplate>
-                                                    <asp:Image ID="productOtherImg" Height="80" Width="80" ImageUrl='<%#Eval("imgurl") %>' runat="server" />
-                                                </ItemTemplate>
-                                            </asp:Repeater>
-                                        </td>
-                                        <td>
-                                            <video width="100" height="100" controls>
-                                                <source src='<%# Eval("video") %>' type="video/mp4"/>
-                                                Can't Load Video
-                                            </video>
-                                        </td>
-                                        <td>
-                                            <asp:Label ID="lblProductDescription" runat="server" Text='<%#Eval("description") %>'></asp:Label>
-                                        </td>
-                                    </ItemTemplate>
-                                </asp:Repeater>
-                            </tr>
-                        </tbody>
-                    </table>
+                        </ItemTemplate>
+                        <FooterTemplate>
+                            </tbody>
+            </table>
+                        </FooterTemplate>
+                    </asp:Repeater>
                 </div>
+
             </div>
             <iv>
         </div>
     </div>
 
+    <!-- Image Preview Modal Start -->
+
+    <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img id="modalImage" src="" class="img-fluid rounded" alt="Preview" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Preview Modal End -->
+
+    <!-- Update Other Image Modal Start -->
+
+    <div class="modal fade" id="fileUploadModal" tabindex="-1" aria-labelledby="fileUploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fileUploadModalLabel">Upload File</h5>
+                    <!-- Custom Close Icon -->
+                    <button class="close" data-bs-dismiss="modal" aria-label="Close" onclick="closeFileUploadModal()">&times;</button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body text-center">
+                    <asp:FileUpload ID="newImg" runat="server" />
+                    <div id="newImagePreview"></div>
+                    <asp:Button ID="btnUpdateOtherImg" runat="server" Text="Update" CssClass="btn btn-primary mt-5" OnClick="btnUpdateOtherImg_Click" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Other Image Modal Start -->
+
+    <!-- Add Other Image Modal Start -->
+
+    <div class="modal fade" id="otherImageUploadModal" tabindex="-1" aria-labelledby="fileUploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="otherImageModalLabel">Upload File</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <asp:Label ID="File_Remaining" runat="server" Text=""></asp:Label>
+                    <asp:FileUpload ID="otherimageuploadname" runat="server" AllowMultiple="true" />
+                    <div id="otherImageModalPreview"></div>
+                    <asp:Button ID="otherImageUploadBtn" runat="server" Text="Update" OnClick="otherImageUploadBtn_Click" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Other Image Modal End -->
+
+    <!--Video Update Start-->
+
+        <div class="modal fade" id="videoUpdateModal" tabindex="-1" aria-labelledby="fileUploadModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="videoUpdateModalLabel">Upload File</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <asp:Label ID="Label2" runat="server" Text=""></asp:Label>
+                        <asp:FileUpload ID="videoUpdateFileUpload" runat="server"/>
+                        <div id="videoUpdateModalPreview"></div>
+                        <asp:Button ID="videoUpdate" runat="server" Text="Update" OnClick="videoUpdate_Click" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!--Video Update End-->
+
+    <script>
+        document.getElementById('<%= newImg.ClientID %>').addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('newImagePreview').innerHTML = `
+                        <div class="image-preview">
+                            <img src="${e.target.result}" >
+                        </div>`;
+                };
+                reader.readAsDataURL(file);//it give status DONE when file is read and at that time onload is triggered
+            }
+        })
+    </script>
 </asp:Content>
