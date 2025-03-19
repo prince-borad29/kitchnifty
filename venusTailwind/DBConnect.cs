@@ -180,9 +180,9 @@ namespace venusTailwind
         }
 
         //when updating image and video both
-        public int updateProduct(int productId, string productName, int catId, decimal price, string desc, string img, string video)
+        public int updateProduct(int productId, string productName, int catId, decimal price, string desc, string img)
         {
-            cmd = new SqlCommand($"UPDATE Products SET product_name='{productName}' ,category_id='{catId}',price='{price}',description='{desc}' , image_url = '{img}' , video_url = '{video}' WHERE product_id = '{productId}';", connection);
+            cmd = new SqlCommand($"UPDATE Products SET product_name='{productName}' ,category_id='{catId}',price='{price}',description='{desc}' , image_url = '{img}'  WHERE product_id = '{productId}';", connection);
 
             return cmd.ExecuteNonQuery();
         }
@@ -195,25 +195,7 @@ namespace venusTailwind
             return cmd.ExecuteNonQuery();
         }
 
-        //handling that one of img or video is need to updated 
-        public int updateProduct(int productId, string productName, int catId, decimal price, string desc, string fileUrl, bool type)
-        {
-            //if type is true update img
-            if (type)
-            {
-                cmd = new SqlCommand($"UPDATE Products SET product_name='{productName}' ,category_id='{catId}',price='{price}',description='{desc}' , image_url = '{fileUrl}'  WHERE product_id = '{productId}';", connection);
-
-            }
-            //if type is false update video
-            else
-            {
-                cmd = new SqlCommand($"UPDATE Products SET product_name='{productName}' ,category_id='{catId}',price='{price}',description='{desc}' , video_url = '{fileUrl}'  WHERE product_id = '{productId}';", connection);
-
-            }
-
-            return cmd.ExecuteNonQuery();
-        }
-
+       
         //add other images of product
         public int addOtherImgs(int productId, string otherImgUrls)
         {
@@ -370,6 +352,14 @@ namespace venusTailwind
 
             dr.Close();
             return products;
+        }
+
+        public DataSet selectProduct(int id)
+        {
+            da = new SqlDataAdapter($"SELECT product_name , category_id , price , description , image_url from Products WHERE product_id = '{id}'", connection);
+            ds = new DataSet();
+            da.Fill(ds);
+            return ds;
         }
     }
 }

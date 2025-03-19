@@ -23,6 +23,11 @@ namespace venusTailwind.Admin
             ddlCategory.DataTextField = ds.Tables[0].Columns[1].ToString();
             ddlCategory.DataValueField = ds.Tables[0].Columns[0].ToString();  
             ddlCategory.DataBind();
+            
+            ddlUpdateCategory.DataSource = ds.Tables[0];
+            ddlUpdateCategory.DataTextField = ds.Tables[0].Columns[1].ToString();
+            ddlUpdateCategory.DataValueField = ds.Tables[0].Columns[0].ToString();  
+            ddlUpdateCategory.DataBind();
 
             fillRepeater();
 
@@ -286,6 +291,68 @@ namespace venusTailwind.Admin
 
         protected void editProduct_Command(object sender, CommandEventArgs e)
         {
+            ViewState["updateProductId"] = e.CommandArgument;
+
+            ds = db.selectProduct(Convert.ToInt32(ViewState["updateProductId"]));
+
+            txtUpdateName.Text = ds.Tables[0].Rows[0]["product_name"].ToString();
+            txtUpdateDesc.Text = ds.Tables[0].Rows[0]["description"].ToString();
+            txtUpdatePrice.Text = ds.Tables[0].Rows[0]["price"].ToString();
+            ddlUpdateCategory.SelectedValue = ds.Tables[0].Rows[0]["category_id"].ToString();
+            ViewState["UpdateMainImgUrl"] = ds.Tables[0].Rows[0]["image_url"].ToString();
+
+            ClientScript.RegisterStartupScript(this.GetType(),"updateProduct", "<script>openProductUpdateModal()</script>");
+        }
+
+        protected void btnUpdateProduct_Click(object sender, EventArgs e)
+        {
+            string currentImg = ViewState["UpdateMainImgUrl"].ToString().Substring(8) , newImg = "";
+
+            if (flUpdateMainImg.HasFile)
+            {
+                string folder = Server.MapPath("~/Admin/uploads/");
+                if (Directory.Exists(folder))
+                {
+                    string[] images = Directory.GetFileSystemEntries(folder);
+                    foreach (string img in images)
+                    {
+                        string filename = Path.GetFileName(img);
+
+                        if (filename == currentImg)
+                        {
+                            //delete existing img
+                            string deletePath = Server.MapPath("~/Admin/uploads/" + currentImg);
+                            File.Delete(deletePath);
+
+                            //give new name to new img
+                            string newImgName = Guid.NewGuid() + Path.GetExtension("uploads/" + flUpdateMainImg.FileName);
+                            string newImgPath = Server.MapPath("~/Admin/uploads/" + newImgName);
+                            flUpdateMainImg.SaveAs(newImgPath);
+
+                            db.updateProduct(
+                                Convert.ToInt32(ViewState["updateProductId"]),
+                                txtUpdateName.Text,
+                                Convert.ToInt32(ddlUpdateCategory.SelectedValue),
+                                Convert.ToDecimal(txtUpdatePrice.Text),
+                                txtUpdateDesc.Text
+                                , "uploads/" + newImgName);
+                            fillRepeater();
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                db.updateProduct(
+                               Convert.ToInt32(ViewState["updateProductId"]),
+                               txtUpdateName.Text,
+                               Convert.ToInt32(ddlUpdateCategory.SelectedValue),
+                               Convert.ToDecimal(txtUpdatePrice.Text),
+                               txtUpdateDesc.Text
+                               );
+                fillRepeater();
+            }
 
         }
 

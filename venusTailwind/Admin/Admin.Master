@@ -51,6 +51,11 @@
             myModal.show();
         }
 
+        function openProductUpdateModal() {
+            var myModal = new bootstrap.Modal(document.getElementById('updateProductModal'));
+            myModal.show();
+        }
+
         // Function to Close Modal
         function closeFileUploadModal() {
             var myModalEl = document.getElementById('fileUploadModal');
