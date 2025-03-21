@@ -13,5 +13,20 @@ namespace venusTailwind.Admin
         {
 
         }
+
+        protected void btnLogin_Click(object sender, EventArgs e)
+        {
+            DBConnect db = new DBConnect();
+
+            bool isLoggedIn = db.loginAdmin(txtEmail.Text,txtPassword.Text);
+            if (isLoggedIn)
+            {
+                Response.Redirect("Dashboard.aspx");
+            }
+            else
+            {
+                Response.Write("<h3 style='color:red;'>Username or Password Invalid</h3>");
+            }
+        }
     }
 }

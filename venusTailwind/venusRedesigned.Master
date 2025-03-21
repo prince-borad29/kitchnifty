@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="venusRedesigned.master.cs" Inherits="venusTailwind.venusRedesigned" %>
+
+<!DOCTYPE html>
 <html lang="en">
 <head runat="server">
     <meta charset="UTF-8">
@@ -11,7 +13,6 @@
 </head>
 <body class="bg-gray-100">
     <form id="form1" runat="server">
-
         <!-- Navbar -->
         <nav class="bg-emerald-800 text-white px-4 py-3">
             <div class="max-w-7xl mx-auto flex justify-between items-center">
@@ -50,11 +51,18 @@
                             </div>
                             <!-- User Dropdown -->
                             <div id="user-dropdown" class="absolute right-0 mt-3 w-48 bg-white text-black rounded-lg shadow-lg hidden z-50">
-                                <p class="px-4 py-2 text-gray-700">Hi Guest</p>
+                                <p class="px-4 py-2 text-gray-700">Hi <%= Session["username"]?.ToString() != null ? Session["username"].ToString() : "Guest"%></p>
                                 <a href="Profile.aspx" class="block px-4 py-2 hover:bg-gray-200">Profile</a>
-                                <asp:LinkButton ID="LinkButton1" runat="server" class="block px-4 py-2 text-left hover:bg-gray-200">Logout</asp:LinkButton>
+                                <% if (Convert.ToBoolean(Session["isLoggedIn"]))
+                                    {%>
+                                <asp:LinkButton ID="lbLogout" OnClick="lbLogout_Click" runat="server" class="block px-4 py-2 text-left hover:bg-gray-200">Logout</asp:LinkButton>
+                                <%}
+                                    else
+                                    { %>
+
                                 <a href="Signup.aspx" class="block px-4 py-2 hover:bg-gray-200">Registration</a>
                                 <a href="Signin.aspx" class="block px-4 py-2 hover:bg-gray-200">Login</a>
+                                <%} %>
                             </div>
                         </div>
                         <!-- Cart Icon -->
@@ -92,9 +100,17 @@
                         <div id="mobile-user-dropdown" class="absolute right-0 mt-3 w-48 bg-white text-black rounded-lg shadow-lg hidden z-50">
                             <p class="px-4 py-2 text-gray-700">Hi Guest</p>
                             <a href="Profile.aspx" class="block px-4 py-2 hover:bg-gray-200">Profile</a>
-                            <asp:LinkButton ID="LinkButton2" runat="server" class="block px-4 py-2 text-left hover:bg-gray-200">Logout</asp:LinkButton>
-                            <a href="Registration.aspx" class="block px-4 py-2 hover:bg-gray-200">Registration</a>
-                            <a href="Login.aspx" class="block px-4 py-2 hover:bg-gray-200">Login</a>
+
+                            <% if (Convert.ToBoolean(Session["isLoggedIn"]))
+                                {%>
+                            <asp:LinkButton ID="lbLogoutMobile" OnClick="lbLogoutMobile_Click" runat="server" class="block px-4 py-2 text-left hover:bg-gray-200">Logout</asp:LinkButton>
+                            <%}
+                                else
+                                { %>
+
+                            <a href="Signup.aspx" class="block px-4 py-2 hover:bg-gray-200">Registration</a>
+                            <a href="Signin.aspx" class="block px-4 py-2 hover:bg-gray-200">Login</a>
+                            <%} %>
                         </div>
                     </div>
                     <a href="Cart.aspx" class="pl-4">

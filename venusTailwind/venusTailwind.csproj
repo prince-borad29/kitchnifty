@@ -1761,7 +1761,6 @@
     <Content Include="Admin\vendor\jquery\jquery.min.js" />
     <Content Include="Admin\vendor\jquery\jquery.slim.js" />
     <Content Include="Admin\vendor\jquery\jquery.slim.min.js" />
-    <Content Include="Admin\WebForm1.aspx" />
     <Content Include="App_Data\Venus_db.mdf" />
     <Content Include="App_Data\Venus_db_log.ldf">
       <DependentUpon>Venus_db.mdf</DependentUpon>
@@ -1875,13 +1874,6 @@
     <Compile Include="Admin\Users.aspx.designer.cs">
       <DependentUpon>Users.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Admin\WebForm1.aspx.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\WebForm1.aspx.designer.cs">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
@@ -1904,6 +1896,7 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="QueryStringEncryptionHelper.cs" />
     <Compile Include="DBConnect.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -2150,8 +2143,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Admin\uploads\" />
-    <Folder Include="Admin\videos\" />
+    <Folder Include="uploads\" />
+    <Folder Include="videos\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

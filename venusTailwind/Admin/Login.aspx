@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿<%@ Page Title="" Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="venusTailwind.Admin.Login" %>
+
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -29,7 +32,7 @@
             <asp:RequiredFieldValidator ID="rfvPassword" runat="server" ControlToValidate="txtPassword" ErrorMessage="Password is required" CssClass="text-red-500 text-sm" Display="Dynamic" />
         </div>
         
-        <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition" />
+        <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition" OnClick="btnLogin_Click"/>
     </form>
     
     <script>

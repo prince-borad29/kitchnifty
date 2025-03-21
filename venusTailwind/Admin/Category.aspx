@@ -29,10 +29,6 @@
                                     <label for="txtcat_name">Name</label>
                                     <asp:TextBox ID="txtcat_name" class="form-control" runat="server"></asp:TextBox>
                                 </div>
-                                <div class="form-group">
-                                    <label for="txtcat_desc">Description</label>
-                                    <asp:TextBox ID="txtcat_desc" class="form-control" TextMode="MultiLine" runat="server"></asp:TextBox>
-                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -58,10 +54,6 @@
                                 <div class="form-group">
                                     <label for="txtcat_update_name">Name</label>
                                     <asp:TextBox ID="txtcat_update_name" class="form-control" runat="server"></asp:TextBox>
-                                </div>
-                                <div class="form-group">
-                                    <label for="txtcat_update_desc">Description</label>
-                                    <asp:TextBox ID="txtcat_update_desc" class="form-control" TextMode="MultiLine" runat="server"></asp:TextBox>
                                 </div>
                             </div>
                         </div>
@@ -94,11 +86,7 @@
                                     <asp:Label ID="Label2" runat="server" Text='<%# Eval("category_name") %>'></asp:Label>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Description">
-                                <ItemTemplate>
-                                    <asp:Label ID="Label3" runat="server" Text='<%# Eval("description") %>'></asp:Label>
-                                </ItemTemplate>
-                            </asp:TemplateField>
+
                             <asp:TemplateField HeaderText="Edit">
                                 <ItemTemplate>
                                     <asp:LinkButton ID="btnEdit" runat="server" CommandArgument='<%# Eval("category_id") %>' CommandName="cmd_edt" OnCommand="btnEdit_Command" >Edit</asp:LinkButton>

@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/venusRedesigned.Master" AutoEventWireup="true" CodeBehind="Product-detail.aspx.cs" Inherits="venusTailwind.Product_detail" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -8,9 +9,10 @@
 
             <!-- Product Gallery -->
             <div class="space-y-4">
-            <img id="mainImage" src="images/product-1.png" class="w-full h-[400px] object-contain rounded-lg shadow-md bg-gray-100 p-2" alt="Nordic Chair">
-
                 
+                <%--<img id="mainImage" src="images/product-1.png" class="w-full h-[400px] object-contain rounded-lg shadow-md bg-gray-100 p-2" alt="Nordic Chair">--%>
+                <asp:Image ID="imgProduct" runat="server" class="w-full h-[460px] object-contain rounded-lg shadow-md bg-gray-100 p-2" />
+
                 <div class="flex space-x-4">
                     <img src="images/product-1.png" alt="Nordic Chair View 1" class="thumbnail w-20 h-20 cursor-pointer border-2 border-transparent rounded-lg hover:border-green-600">
                     <img src="images/product-2.png" alt="Nordic Chair View 2" class="thumbnail w-20 h-20 cursor-pointer border-2 border-transparent rounded-lg hover:border-green-600">
@@ -20,8 +22,9 @@
 
             <!-- Product Info -->
             <div class="space-y-6">
-                <h2 class="text-3xl font-bold text-gray-900">Nordic Chair</h2>
-                <strong class="text-2xl text-green-700">$50.00</strong>
+                <%--<h2 class="text-3xl font-bold text-gray-900">Nordic Chair</h2>--%>
+                <asp:Label ID="lblProductName" runat="server" Text="Label" class="text-3xl font-bold text-gray-900"></asp:Label>
+                <asp:Label ID="lblPrice" runat="server" Text="Label"></asp:Label>
 
                 <p class="text-gray-600">Experience the perfect blend of style and comfort with our Nordic Chair. Crafted with premium materials and designed with modern aesthetics in mind, this chair is perfect for any contemporary space.</p>
 
@@ -35,30 +38,16 @@
                 <asp:Button ID="btnAddToCart" runat="server" Text="Add to Cart"
                     CssClass="bg-green-700 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-800 transition duration-300" />
 
-                <!-- Product Details -->
-                <div class="bg-gray-100 p-4 rounded-lg">
-                    <h4 class="text-xl font-semibold mb-3">Product Details</h4>
-
-                    <table class="w-full text-gray-700">
-                        <tr class="border-b">
-                            <td class="py-2 font-semibold">Materials</td>
-                            <td>Solid Oak Wood, Premium Fabric</td>
-                        </tr>
-                        <tr class="border-b">
-                            <td class="py-2 font-semibold">Dimensions</td>
-                            <td>W: 60cm x D: 65cm x H: 85cm</td>
-                        </tr>
-                        <tr class="border-b">
-                            <td class="py-2 font-semibold">Weight</td>
-                            <td>8.5 kg</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 font-semibold">Assembly</td>
-                            <td>Required (Tools Included)</td>
-                        </tr>
-                    </table>
+                <div class="flex">
+                    <div class="relative w-50 h-[300px] rounded-2xl overflow-hidden p-3">
+                        <video id="vid1" controls class="w-full h-full rounded-lg">
+                            <source src="" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 

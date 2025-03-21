@@ -12,7 +12,7 @@ namespace venusTailwind.Admin
     public partial class Products : System.Web.UI.Page
     {
         DBConnect db = new DBConnect();
-        private string mainImageUrl = "" , videoUrl = "" , otherImagesUrls="";
+        private string mainImageUrl = "", videoUrl = "", otherImagesUrls = "";
         private DataSet ds;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,8 +21,13 @@ namespace venusTailwind.Admin
 
             ddlCategory.DataSource = ds.Tables[0];
             ddlCategory.DataTextField = ds.Tables[0].Columns[1].ToString();
-            ddlCategory.DataValueField = ds.Tables[0].Columns[0].ToString();  
+            ddlCategory.DataValueField = ds.Tables[0].Columns[0].ToString();
             ddlCategory.DataBind();
+
+            ddlUpdateCategory.DataSource = ds.Tables[0];
+            ddlUpdateCategory.DataTextField = ds.Tables[0].Columns[1].ToString();
+            ddlUpdateCategory.DataValueField = ds.Tables[0].Columns[0].ToString();
+            ddlUpdateCategory.DataBind();
 
             fillRepeater();
 
@@ -43,11 +48,11 @@ namespace venusTailwind.Admin
         protected void btnUpdateOtherImg_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(ViewState["otherImageId"]);
-            string currentImg = ViewState["otherImageUrl"].ToString().Substring(8);
+            string currentImg = ViewState["otherImageUrl"].ToString().Substring(11);
 
             if (newImg.HasFile)
             {
-                string folder = Server.MapPath("~/Admin/uploads/");
+                string folder = Server.MapPath("~/uploads/");
                 if (Directory.Exists(folder))
                 {
                     string[] images = Directory.GetFileSystemEntries(folder);
@@ -58,16 +63,16 @@ namespace venusTailwind.Admin
                         if (filename == currentImg)
                         {
                             //delete existing img
-                            string deletePath = Server.MapPath("~/Admin/uploads/" + currentImg);
+                            string deletePath = Server.MapPath("~/uploads/" + currentImg);
                             File.Delete(deletePath);
 
                             //give new name to new img
                             string newImgName = Guid.NewGuid() + Path.GetExtension("uploads/" + newImg.FileName);
-                            string newImgPath = Server.MapPath("~/Admin/uploads/" + newImgName);
+                            string newImgPath = Server.MapPath("~/uploads/" + newImgName);
                             newImg.SaveAs(newImgPath);
 
 
-                            db.updateOtherImg(id, "uploads/"+newImgName);
+                            db.updateOtherImg(id, "../uploads/" + newImgName);
                             fillRepeater();
                             break;
                         }
@@ -78,7 +83,7 @@ namespace venusTailwind.Admin
 
         protected void deleteOtherImage_Command(object sender, CommandEventArgs e)
         {
-            string folder = Server.MapPath("~/Admin/uploads/");
+            string folder = Server.MapPath("~/uploads/");
 
             if (Directory.Exists(folder))
             {
@@ -87,11 +92,11 @@ namespace venusTailwind.Admin
                 foreach (string img in images)
                 {
                     string filename = Path.GetFileName(img);
-                    string finding = e.CommandName.ToString().Substring(8);
+                    string finding = e.CommandName.ToString().Substring(11);
 
                     if (filename == finding)
                     {
-                        string deletePath = Server.MapPath("~/Admin/uploads/" + finding);
+                        string deletePath = Server.MapPath("~/uploads/" + finding);
                         File.Delete(deletePath);
 
 
@@ -136,11 +141,14 @@ namespace venusTailwind.Admin
             List<HttpPostedFile> finalFilesToUpload = new List<HttpPostedFile>();
 
             // Check if files exceed limit
+            int till = 5 + Convert.ToInt16(ViewState["remaining"]);
+            int lastIndex = uploadedFiles.Count - 2;
+            int totalFilesUploaded = otherimageuploadname.PostedFiles.Count;
 
-            if (uploadedFiles.Count > Convert.ToInt16(ViewState["remaining"]))
+            if (totalFilesUploaded > Convert.ToInt16(ViewState["remaining"]))
             {
                 // Take last 'remaining' files
-                for (int i = uploadedFiles.Count - Convert.ToInt16(ViewState["remaining"]); i < uploadedFiles.Count; i++)
+                for (int i = 5; i < till; i++)
                 {
                     finalFilesToUpload.Add(uploadedFiles[i]);
                 }
@@ -148,7 +156,7 @@ namespace venusTailwind.Admin
             else
             {
                 // All selected files are within limit
-                for (int i = 0; i < uploadedFiles.Count; i++)
+                for (int i = 5; i <= lastIndex; i++)
                 {
                     finalFilesToUpload.Add(uploadedFiles[i]);
                 }
@@ -160,10 +168,10 @@ namespace venusTailwind.Admin
                 if (file.ContentLength > 0)
                 {
                     string newImgName = Guid.NewGuid() + Path.GetExtension(file.FileName);
-                    string newImgPath = Server.MapPath("~/Admin/uploads/" + newImgName);
+                    string newImgPath = Server.MapPath("~/uploads/" + newImgName);
                     file.SaveAs(newImgPath);
 
-                    db.uploadotherimage2(Convert.ToInt16(ViewState["otherImageUploadId"]), "uploads/" + newImgName);
+                    db.uploadotherimage2(Convert.ToInt16(ViewState["otherImageUploadId"]), "../uploads/" + newImgName);
                 }
             }
             fillRepeater();
@@ -185,7 +193,7 @@ namespace venusTailwind.Admin
 
                 if (urlExists != null && urlExists != string.Empty)
                 {
-                    string currentVideo = (ViewState["currentVideo"]).ToString().Substring(7);
+                    string currentVideo = (ViewState["currentVideo"]).ToString().Substring(10);
                     if (Directory.Exists(folder))
                     {
                         string[] videos = Directory.GetFileSystemEntries(folder);
@@ -196,15 +204,15 @@ namespace venusTailwind.Admin
                             if (filename == currentVideo)
                             {
                                 //delete existing video
-                                string deletePath = Server.MapPath("~/Admin/videos/" + currentVideo);
+                                string deletePath = Server.MapPath("~/videos/" + currentVideo);
                                 File.Delete(deletePath);
 
                                 //give new name to new video
                                 string newVideoName = Guid.NewGuid() + Path.GetExtension("videos/" + videoUpdateFileUpload.FileName);
-                                string newVideoPath = Server.MapPath("~/Admin/videos/" + newVideoName);
+                                string newVideoPath = Server.MapPath("~/videos/" + newVideoName);
                                 videoUpdateFileUpload.SaveAs(newVideoPath);
 
-                                db.updateVideo(id, "videos/" + newVideoName);
+                                db.updateVideo(id, "../videos/" + newVideoName);
 
                                 isEdited = true;
                                 fillRepeater();
@@ -217,10 +225,10 @@ namespace venusTailwind.Admin
                 {
                     //give new name to new video
                     string newVideoName = Guid.NewGuid() + Path.GetExtension("videos/" + videoUpdateFileUpload.FileName);
-                    string newVideoPath = Server.MapPath("~/Admin/videos/" + newVideoName);
+                    string newVideoPath = Server.MapPath("~/videos/" + newVideoName);
                     videoUpdateFileUpload.SaveAs(newVideoPath);
 
-                    db.updateVideo(id, "videos/" + newVideoName);
+                    db.updateVideo(id, "../videos/" + newVideoName);
 
                     isEdited = true;
                     fillRepeater();
@@ -264,7 +272,7 @@ namespace venusTailwind.Admin
                 }
             }
 
-            File.Delete(Server.MapPath("~/Admin/"+vid_url));
+            File.Delete(Server.MapPath(vid_url));
             File.Delete(Server.MapPath(e.CommandName));
 
             db.deleteProduct(Convert.ToInt32(e.CommandArgument));
@@ -286,10 +294,73 @@ namespace venusTailwind.Admin
 
         protected void editProduct_Command(object sender, CommandEventArgs e)
         {
+            ViewState["updateProductId"] = e.CommandArgument;
+
+            ds = db.selectProduct(Convert.ToInt32(ViewState["updateProductId"]));
+
+            txtUpdateName.Text = ds.Tables[0].Rows[0]["product_name"].ToString();
+            txtUpdateDesc.Text = ds.Tables[0].Rows[0]["description"].ToString();
+            txtUpdatePrice.Text = ds.Tables[0].Rows[0]["price"].ToString();
+            ddlUpdateCategory.SelectedValue = ds.Tables[0].Rows[0]["category_id"].ToString();
+            ViewState["UpdateMainImgUrl"] = ds.Tables[0].Rows[0]["image_url"].ToString();
+
+            ClientScript.RegisterStartupScript(this.GetType(), "updateProduct", "<script>openProductUpdateModal()</script>");
+        }
+
+        protected void btnUpdateProduct_Click(object sender, EventArgs e)
+        {
+            string currentImg = ViewState["UpdateMainImgUrl"].ToString().Substring(11), newImg = "";
+
+            if (flUpdateMainImg.HasFile)
+            {
+                string folder = Server.MapPath("~/uploads/");
+                if (Directory.Exists(folder))
+                {
+                    string[] images = Directory.GetFileSystemEntries(folder);
+                    foreach (string img in images)
+                    {
+                        string filename = Path.GetFileName(img);
+
+                        if (filename == currentImg)
+                        {
+                            //delete existing img
+                            string deletePath = Server.MapPath("~/uploads/" + currentImg);
+                            File.Delete(deletePath);
+
+                            //give new name to new img
+                            string newImgName = Guid.NewGuid() + Path.GetExtension("uploads/" + flUpdateMainImg.FileName);
+                            string newImgPath = Server.MapPath("~/uploads/" + newImgName);
+                            flUpdateMainImg.SaveAs(newImgPath);
+
+                            db.updateProduct(
+                                Convert.ToInt32(ViewState["updateProductId"]),
+                                txtUpdateName.Text,
+                                Convert.ToInt32(ddlUpdateCategory.SelectedValue),
+                                Convert.ToDecimal(txtUpdatePrice.Text),
+                                txtUpdateDesc.Text
+                                , "../uploads/" + newImgName);
+                            fillRepeater();
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                db.updateProduct(
+                               Convert.ToInt32(ViewState["updateProductId"]),
+                               txtUpdateName.Text,
+                               Convert.ToInt32(ddlUpdateCategory.SelectedValue),
+                               Convert.ToDecimal(txtUpdatePrice.Text),
+                               txtUpdateDesc.Text
+                               );
+                fillRepeater();
+            }
 
         }
 
-        void fillRepeater() {
+        void fillRepeater()
+        {
             List<Product> products = db.GetProduct();
             //ViewState["products"] = products;
 
@@ -305,22 +376,23 @@ namespace venusTailwind.Admin
                 if (imgMainProduct.HasFile)
                 {
                     string mainImageName = Guid.NewGuid() + Path.GetExtension(imgMainProduct.FileName);
-                    string mainImagePath = Server.MapPath("~/Admin/uploads/" + mainImageName);
+                    string mainImagePath = Server.MapPath("~/uploads/" + mainImageName);
                     imgMainProduct.SaveAs(mainImagePath);
-                    mainImageUrl = "uploads/" + mainImageName;
+                    mainImageUrl = "../uploads/" + mainImageName;
                 }
 
                 //video of product
                 if (productVideo.HasFile)
                 {
                     string video = Guid.NewGuid() + Path.GetExtension(productVideo.FileName);
-                    string videopath = Server.MapPath("~/Admin/videos/" + video);
+                    string videopath = Server.MapPath("~/videos/" + video);
                     productVideo.SaveAs(videopath);
-                    videoUrl = "videos/" + video;
+                    videoUrl = "../videos/" + video;
                 }
 
                 //other imgs of product
-                if (productOtherImages.HasFiles) {
+                if (productOtherImages.HasFiles)
+                {
                     /* 	
                  * Handle Multiple Images
                  * Request.Files is a collection that contains all the files uploaded by a client during a single HTTP request, usually when submitting a form with enctype="multipart/form-data".
@@ -345,9 +417,9 @@ namespace venusTailwind.Admin
                              * A GUID is a 128-bit integer (16 bytes) that is virtually guaranteed to be unique across space and time.
                              */
                             string fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
-                            string filePath = Server.MapPath("~/Admin/uploads/" + fileName);
+                            string filePath = Server.MapPath("~/uploads/" + fileName);
                             file.SaveAs(filePath);
-                            otherImagesUrls += "uploads/" + fileName + ' ';
+                            otherImagesUrls += "../uploads/" + fileName + ' ';
                         }
                     }
 
@@ -361,7 +433,7 @@ namespace venusTailwind.Admin
                         txtProductDesc.Text,
                         mainImageUrl,
                         videoUrl
-                        ); 
+                        );
 
 
                     int res = db.addOtherImgs(productId, otherImagesUrls); // Add multiple image URLs

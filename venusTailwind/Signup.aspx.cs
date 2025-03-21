@@ -18,7 +18,7 @@ namespace venusTailwind
         protected void btnRegister_Click(object sender, EventArgs e)
         {
             db.Signup(txtUsername.Text, txtEmail.Text, txtPassword.Text, txtFullName.Text, txtPhone.Text);
-            Response.Redirect("login.aspx");
+            Response.Redirect("Signin.aspx");
         }
     }
 }

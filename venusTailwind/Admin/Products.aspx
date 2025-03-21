@@ -46,12 +46,48 @@
                             <asp:FileUpload ID="productVideo" runat="server" />
                         </div>
                         <div class="form-group">
-                            <label>Product Video</label>
+                            <label>Product Other Images</label>
                             <asp:FileUpload ID="productOtherImages" runat="server" AllowMultiple="true" />
                         </div>
                     </div>
                     <div class="modal-footer">
                         <asp:Button ID="btnAddProduct" class="btn btn-primary" runat="server" Text="Add" OnClick="btnAddProduct_Click" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <%--Update Product Modal--%>
+         <!-- Product Modal -->
+        <div class="modal fade" id="updateProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <asp:DropDownList ID="ddlUpdateCategory" runat="server"></asp:DropDownList>
+                        </div>
+                        <div class="form-group">
+                            <label>Product Name</label>
+                            <asp:TextBox ID="txtUpdateName" class="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        <div class="form-group">
+                            <label>Product Price</label>
+                            <asp:TextBox ID="txtUpdatePrice" class="form-control" runat="server"></asp:TextBox>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Product Description</label>
+                            <asp:TextBox ID="txtUpdateDesc" class="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                        </div>
+                        <div class="form-group">
+                            <label>Product Main Image</label>
+                            <asp:FileUpload ID="flUpdateMainImg" runat="server" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button ID="btnUpdateProduct" class="btn btn-primary" runat="server" Text="Update" OnClick="btnUpdateProduct_Click" />
                     </div>
                 </div>
             </div>
@@ -211,22 +247,22 @@
 
     <!--Video Update Start-->
 
-        <div class="modal fade" id="videoUpdateModal" tabindex="-1" aria-labelledby="fileUploadModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-md">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="videoUpdateModalLabel">Upload File</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <asp:Label ID="Label2" runat="server" Text=""></asp:Label>
-                        <asp:FileUpload ID="videoUpdateFileUpload" runat="server"/>
-                        <div id="videoUpdateModalPreview"></div>
-                        <asp:Button ID="videoUpdate" runat="server" Text="Update" OnClick="videoUpdate_Click" />
-                    </div>
+    <div class="modal fade" id="videoUpdateModal" tabindex="-1" aria-labelledby="fileUploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="videoUpdateModalLabel">Upload File</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <asp:Label ID="Label2" runat="server" Text=""></asp:Label>
+                    <asp:FileUpload ID="videoUpdateFileUpload" runat="server" />
+                    <div id="videoUpdateModalPreview"></div>
+                    <asp:Button ID="videoUpdate" runat="server" Text="Update" OnClick="videoUpdate_Click" />
                 </div>
             </div>
         </div>
+    </div>
 
     <!--Video Update End-->
 
