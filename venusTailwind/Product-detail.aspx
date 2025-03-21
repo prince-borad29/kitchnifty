@@ -9,8 +9,7 @@
             <!-- Product Gallery -->
             <div class="space-y-4">
             <img id="mainImage" src="images/product-1.png" class="w-full h-[400px] object-contain rounded-lg shadow-md bg-gray-100 p-2" alt="Nordic Chair">
-
-                
+       
                 <div class="flex space-x-4">
                     <img src="images/product-1.png" alt="Nordic Chair View 1" class="thumbnail w-20 h-20 cursor-pointer border-2 border-transparent rounded-lg hover:border-green-600">
                     <img src="images/product-2.png" alt="Nordic Chair View 2" class="thumbnail w-20 h-20 cursor-pointer border-2 border-transparent rounded-lg hover:border-green-600">
