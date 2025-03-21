@@ -15,21 +15,21 @@ namespace venusTailwind
     {
 
         /// <summary>
-        /// QtyTextBox control.
+        /// rptProduct control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox QtyTextBox;
+        protected global::System.Web.UI.WebControls.Repeater rptProduct;
 
         /// <summary>
-        /// btnAddToCart control.
+        /// Repeater1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddToCart;
+        protected global::System.Web.UI.WebControls.Repeater Repeater1;
     }
 }

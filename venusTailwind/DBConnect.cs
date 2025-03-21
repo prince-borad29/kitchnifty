@@ -373,7 +373,7 @@ namespace venusTailwind
         //display product in shop page
         public DataSet selectProducts()
         {
-            da = new SqlDataAdapter($"SELECT product_name , category_id , price  , REPLACE(image_url,'../','') AS imageMain from Products;", connection);
+            da = new SqlDataAdapter($"SELECT product_id, product_name , category_id , price  , REPLACE(image_url,'../','') AS imageMain from Products;", connection);
             ds = new DataSet();
             da.Fill(ds);
             return ds;
@@ -387,7 +387,21 @@ namespace venusTailwind
             return ds;
         }
 
+        public DataSet selectProductdetails(int id)
+        {
+            da = new SqlDataAdapter($"SELECT product_name , category_id , price , description , REPLACE(image_url,'../','') AS imageMain,REPLACE(video_url,'../','') AS videoUrl from Products WHERE product_id = '{id}';", connection);
+            ds = new DataSet();
+            da.Fill(ds);
+            return ds;
+        }
 
+        public DataSet selectProductImages(int id)
+        {
+            da = new SqlDataAdapter($"SELECT REPLACE(image_url,'../','') AS imageOther FROM productImages WHERE product_id = '{id}'",connection);
+            ds = new DataSet();
+            da.Fill(ds);
+            return ds;
+        }
     }
 }
 

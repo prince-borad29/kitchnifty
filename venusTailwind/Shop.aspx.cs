@@ -15,27 +15,22 @@ namespace venusTailwind
         protected void Page_Load(object sender, EventArgs e)
         {
             db = new DBConnect();
-
             if (!IsPostBack)
             {
                 fillCategory();
                 fillRepeater();
             }
-
-
         }
 
         void fillRepeater()
         {
             ds = db.selectProducts();
-
             rptProducts.DataSource = ds;
             rptProducts.DataBind();
         }
 
         void fillRepeater(DataSet ds)
         {
-
             rptProducts.DataSource = ds;
             rptProducts.DataBind();
         }
@@ -54,7 +49,6 @@ namespace venusTailwind
             int id = Convert.ToInt32(ddlCategory.SelectedValue);
 
             if (id > 0)
-
             {
                 ViewState["catId"] = ddlCategory.SelectedValue;
                 ddlCategory.SelectedValue = ViewState["catId"].ToString();
@@ -65,8 +59,30 @@ namespace venusTailwind
             else
             {
                 fillCategory();
+                fillRepeater();
             }
+        }
 
+        protected void viewbtn_Command(object sender, CommandEventArgs e)
+        {
+            int id = Convert.ToInt32(e.CommandArgument);
+
+
+            // Store the image URL in Session (to keep URL clean)
+            //Session["ViewImage"] = args[0];
+
+            // Redirect using Query String for sharable product details
+            // Encode each value before creating the query string
+            string id1 = HttpUtility.UrlEncode(id.ToString());
+
+            // Create query string safely
+            string queryString = $"id={id1}";
+
+            // Encrypt the entire query string
+            string encryptedValue = QueryStringEncryptionHelper.Encrypt(queryString);
+
+            // Redirect with encrypted value
+            Response.Redirect("Product-detail.aspx?data=" + encryptedValue);
         }
     }
 }

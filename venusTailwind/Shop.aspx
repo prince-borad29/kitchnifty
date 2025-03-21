@@ -7,7 +7,6 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
     <!-- Hero Section -->
     <div class="relative bg-cover bg-center h-[400px] flex items-center justify-center text-center text-white" style="background-image: url('images/hero-bg.jpg');">
         <div class="bg-black bg-opacity-50 w-full h-full absolute top-0 left-0"></div>
@@ -27,17 +26,17 @@
     </div>--%>
 
     <div class="container mx-auto px-4 py-6">
-    <div class="flex flex-wrap items-center justify-between gap-4">
-        
-        <!-- Category Filter -->
-        <div class="w-full sm:w-auto">
-            <label for="ddlCategory" class="block text-sm font-medium text-gray-700">Category</label>
-            <asp:DropDownList AutoPostBack="true" ID="ddlCategory" OnSelectedIndexChanged="ddlCategory_SelectedIndexChanged" runat="server" CssClass="block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-300">
-            </asp:DropDownList>
-        </div>
+        <div class="flex flex-wrap items-center justify-between gap-4">
 
-        <!-- Price Filter -->
-        <%--<div class="w-full sm:w-auto">
+            <!-- Category Filter -->
+            <div class="w-full sm:w-auto">
+                <label for="ddlCategory" class="block text-sm font-medium text-gray-700">Category</label>
+                <asp:DropDownList AutoPostBack="true" ID="ddlCategory" OnSelectedIndexChanged="ddlCategory_SelectedIndexChanged" runat="server" CssClass="block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-300">
+                </asp:DropDownList>
+            </div>
+
+            <!-- Price Filter -->
+            <%--<div class="w-full sm:w-auto">
             <label for="ddlPrice" class="block text-sm font-medium text-gray-700">Price</label>
             <asp:DropDownList ID="ddlPrice" runat="server" CssClass="block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-300">
                 <asp:ListItem Text="All Prices" Value="" Selected="True"></asp:ListItem>
@@ -47,8 +46,8 @@
             </asp:DropDownList>
         </div>--%>
 
-        <!-- Sorting Options -->
-       <%-- <div class="w-full sm:w-auto">
+            <!-- Sorting Options -->
+            <%-- <div class="w-full sm:w-auto">
             <label for="ddlSort" class="block text-sm font-medium text-gray-700">Sort By</label>
             <asp:DropDownList ID="ddlSort" runat="server" CssClass="block w-full px-3 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-300">
                 <asp:ListItem Text="Default" Value="default" Selected="True"></asp:ListItem>
@@ -58,15 +57,14 @@
             </asp:DropDownList>
         </div>--%>
 
-        <!-- Submit Button -->
-     <%--   <div class="w-full sm:w-auto mt-2 sm:mt-6">
+            <!-- Submit Button -->
+            <%--   <div class="w-full sm:w-auto mt-2 sm:mt-6">
             <asp:Button ID="btnFilter" runat="server" Text="Apply Filters"
                 CssClass="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition" 
                  />
         </div>--%>
-
+        </div>
     </div>
-</div>
 
 
     <!-- Product Section -->
@@ -93,34 +91,44 @@
     </div>--%>
 
     <asp:Repeater ID="rptProducts" runat="server">
-    <HeaderTemplate>
-        <div class="untree_co-section product-section before-footer-section px-4 py-6">
-            <div class="container mx-auto">
-                <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-    </HeaderTemplate>
+        <HeaderTemplate>
+            <div class="untree_co-section product-section before-footer-section px-4 py-6">
+                <div class="container mx-auto">
+                    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+        </HeaderTemplate>
 
-    <ItemTemplate>
-        <!-- Product Card -->
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:scale-105">
-            <a href="Product-detail.aspx" class="block">
-                <img src='<%# Eval("imageMain") %>' alt="Product Image" 
-                     class="w-full h-48 object-cover rounded-t-lg" />
-            </a>
-            <div class="p-4">
-                <h3 class="text-lg font-semibold text-gray-800"><%# Eval("product_name") %></h3>
-                <div class="flex justify-between items-center mt-2">
-                    <span class="text-green-600 font-bold">₹<%# Eval("price") %></span>
+        <ItemTemplate>
+            <!-- Product Card -->
+            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                <img src='<%# Eval("imageMain") %>' alt="Product Image"
+                    class="w-full h-48 object-cover rounded-t-lg" />
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold text-gray-800"><%# Eval("product_name") %></h3>
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-green-600 font-bold">₹<%# Eval("price") %></span>
+                    </div>
+                    <div class="flex justify-between items-center mt-3 space-x-2">
+                        <asp:ImageButton ID="cartbtn" runat="server"
+                            ImageUrl="~/images/shopping-bag.png"
+                            class="btn bg-amber-500 hover:bg-amber-600 text-white font-semibold shadow-md px-4 py-2 rounded-lg" />
+
+                        <asp:ImageButton ID="viewbtn" runat="server"
+                            ImageUrl="~/images/view.png"
+                            OnCommand="viewbtn_Command"
+                            CommandArgument='<%# Eval("product_id") %>'
+                            class="btn bg-red-500 hover:bg-red-600 text-white font-semibold shadow-md px-4 py-2 rounded-lg" />
+                    </div>
+
                 </div>
             </div>
-        </div>
-    </ItemTemplate>
+        </ItemTemplate>
 
-    <FooterTemplate>
-                </div>
+        <FooterTemplate>
+            </div>
             </div>
         </div>
-    </FooterTemplate>
-</asp:Repeater>
+        </FooterTemplate>
+    </asp:Repeater>
 
 
 

@@ -12,7 +12,7 @@ namespace venusTailwind.Admin
     public partial class Products : System.Web.UI.Page
     {
         DBConnect db = new DBConnect();
-        private string mainImageUrl = "" , videoUrl = "" , otherImagesUrls="";
+        private string mainImageUrl = "", videoUrl = "", otherImagesUrls = "";
         private DataSet ds;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,12 +21,12 @@ namespace venusTailwind.Admin
 
             ddlCategory.DataSource = ds.Tables[0];
             ddlCategory.DataTextField = ds.Tables[0].Columns[1].ToString();
-            ddlCategory.DataValueField = ds.Tables[0].Columns[0].ToString();  
+            ddlCategory.DataValueField = ds.Tables[0].Columns[0].ToString();
             ddlCategory.DataBind();
-            
+
             ddlUpdateCategory.DataSource = ds.Tables[0];
             ddlUpdateCategory.DataTextField = ds.Tables[0].Columns[1].ToString();
-            ddlUpdateCategory.DataValueField = ds.Tables[0].Columns[0].ToString();  
+            ddlUpdateCategory.DataValueField = ds.Tables[0].Columns[0].ToString();
             ddlUpdateCategory.DataBind();
 
             fillRepeater();
@@ -72,7 +72,7 @@ namespace venusTailwind.Admin
                             newImg.SaveAs(newImgPath);
 
 
-                            db.updateOtherImg(id, "../uploads/"+newImgName);
+                            db.updateOtherImg(id, "../uploads/" + newImgName);
                             fillRepeater();
                             break;
                         }
@@ -139,7 +139,7 @@ namespace venusTailwind.Admin
         {
             HttpFileCollection uploadedFiles = Request.Files;
             List<HttpPostedFile> finalFilesToUpload = new List<HttpPostedFile>();
-           
+
             // Check if files exceed limit
             int till = 5 + Convert.ToInt16(ViewState["remaining"]);
             int lastIndex = uploadedFiles.Count - 2;
@@ -148,7 +148,7 @@ namespace venusTailwind.Admin
             if (totalFilesUploaded > Convert.ToInt16(ViewState["remaining"]))
             {
                 // Take last 'remaining' files
-                for (int i = 5; i < till ; i++)
+                for (int i = 5; i < till; i++)
                 {
                     finalFilesToUpload.Add(uploadedFiles[i]);
                 }
@@ -304,12 +304,12 @@ namespace venusTailwind.Admin
             ddlUpdateCategory.SelectedValue = ds.Tables[0].Rows[0]["category_id"].ToString();
             ViewState["UpdateMainImgUrl"] = ds.Tables[0].Rows[0]["image_url"].ToString();
 
-            ClientScript.RegisterStartupScript(this.GetType(),"updateProduct", "<script>openProductUpdateModal()</script>");
+            ClientScript.RegisterStartupScript(this.GetType(), "updateProduct", "<script>openProductUpdateModal()</script>");
         }
 
         protected void btnUpdateProduct_Click(object sender, EventArgs e)
         {
-            string currentImg = ViewState["UpdateMainImgUrl"].ToString().Substring(11) , newImg = "";
+            string currentImg = ViewState["UpdateMainImgUrl"].ToString().Substring(11), newImg = "";
 
             if (flUpdateMainImg.HasFile)
             {
@@ -359,7 +359,8 @@ namespace venusTailwind.Admin
 
         }
 
-        void fillRepeater() {
+        void fillRepeater()
+        {
             List<Product> products = db.GetProduct();
             //ViewState["products"] = products;
 
@@ -390,7 +391,8 @@ namespace venusTailwind.Admin
                 }
 
                 //other imgs of product
-                if (productOtherImages.HasFiles) {
+                if (productOtherImages.HasFiles)
+                {
                     /* 	
                  * Handle Multiple Images
                  * Request.Files is a collection that contains all the files uploaded by a client during a single HTTP request, usually when submitting a form with enctype="multipart/form-data".
@@ -431,7 +433,7 @@ namespace venusTailwind.Admin
                         txtProductDesc.Text,
                         mainImageUrl,
                         videoUrl
-                        ); 
+                        );
 
 
                     int res = db.addOtherImgs(productId, otherImagesUrls); // Add multiple image URLs
