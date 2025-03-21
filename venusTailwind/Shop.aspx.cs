@@ -46,6 +46,7 @@ namespace venusTailwind
             ddlCategory.DataTextField = ds.Tables[0].Columns["category_name"].ToString();
             ddlCategory.DataValueField = ds.Tables[0].Columns["category_id"].ToString();
             ddlCategory.DataBind();
+            ddlCategory.Items.Insert(0,new ListItem("All","0"));
         }
 
         protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
