@@ -17,5 +17,12 @@ namespace venusTailwind.Admin
             //    Response.Redirect("Login.aspx");
             //}
         }
+
+        protected void lbLogoutAdmin_Click(object sender, EventArgs e)
+        {
+            DBConnect db = new DBConnect();
+            db.Logout();
+            Response.Redirect("Login.aspx");
+        }
     }
 }

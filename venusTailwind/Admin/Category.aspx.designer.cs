@@ -24,15 +24,6 @@ namespace venusTailwind.Admin
         protected global::System.Web.UI.WebControls.TextBox txtcat_name;
 
         /// <summary>
-        /// txtcat_desc control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtcat_desc;
-
-        /// <summary>
         /// btnSubmit control.
         /// </summary>
         /// <remarks>
@@ -49,15 +40,6 @@ namespace venusTailwind.Admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtcat_update_name;
-
-        /// <summary>
-        /// txtcat_update_desc control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtcat_update_desc;
 
         /// <summary>
         /// updateModalBtn control.

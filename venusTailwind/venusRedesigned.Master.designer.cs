@@ -33,76 +33,49 @@ namespace venusTailwind
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// liHomePage control.
+        /// liUserIcon control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liHomePage;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liUserIcon;
 
         /// <summary>
-        /// aHomePage control.
+        /// lbLogout control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink aHomePage;
+        protected global::System.Web.UI.WebControls.LinkButton lbLogout;
 
         /// <summary>
-        /// liShopPage control.
+        /// liCartIcon control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liShopPage;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liCartIcon;
 
         /// <summary>
-        /// aShopPage control.
+        /// aCartIcon control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink aShopPage;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor aCartIcon;
 
         /// <summary>
-        /// liAboutPage control.
+        /// lbLogoutMobile control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liAboutPage;
-
-        /// <summary>
-        /// aAboutPage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink aAboutPage;
-
-        /// <summary>
-        /// liContactPage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liContactPage;
-
-        /// <summary>
-        /// aContactPage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink aContactPage;
+        protected global::System.Web.UI.WebControls.LinkButton lbLogoutMobile;
 
         /// <summary>
         /// ContentPlaceHolder1 control.

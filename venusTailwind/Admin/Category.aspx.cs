@@ -22,7 +22,7 @@ namespace venusTailwind.Admin
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
                 db = new DBConnect();
-                int insert = db.addCategory(txtcat_name.Text , txtcat_desc.Text);
+                int insert = db.addCategory(txtcat_name.Text);
                 if(insert > 0)
                 {
                     fillGrid();
@@ -48,7 +48,6 @@ namespace venusTailwind.Admin
             ds = db.fetchCategory(Convert.ToInt32(ViewState["categoryId"]));
 
             txtcat_update_name.Text = ds.Tables[0].Rows[0]["category_name"].ToString();
-            txtcat_update_desc.Text = ds.Tables[0].Rows[0]["description"].ToString();
 
             string script = "<script>$(document).ready(function() { $('#exampleModalCenter2').modal('show'); });</script>";
             ClientScript.RegisterStartupScript(this.GetType(), "ShowModal", script);
@@ -64,7 +63,7 @@ namespace venusTailwind.Admin
 
         protected void updateModalBtn_Click(object sender, EventArgs e)
         {
-            db.updateCategory(Convert.ToInt32(ViewState["categoryId"]), txtcat_update_name.Text,txtcat_update_desc.Text) ;
+            db.updateCategory(Convert.ToInt32(ViewState["categoryId"]), txtcat_update_name.Text) ;
 
             fillGrid();
         }

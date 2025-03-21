@@ -25,11 +25,14 @@ namespace venusTailwind
             connection.Open();
         }
 
+        /*
+            AUTHENTICATION  
+        */
         public int Signup(string unm, string eml, string pwd, string fname, string phone)
         {
             pwd = HashPassword(pwd);
 
-            cmd = new SqlCommand($"INSERT INTO Users(username,email,password_hash,full_name,phone,created_at,is_active) Values('{unm}','{eml}','{pwd}','{fname}','{phone}','{DateTime.Now}','{true}')", connection);
+            cmd = new SqlCommand($"INSERT INTO Users(username,email,password_hash,full_name,phone) Values('{unm}','{eml}','{pwd}','{fname}','{phone}')", connection);
 
             int res = cmd.ExecuteNonQuery();
 
@@ -78,6 +81,11 @@ namespace venusTailwind
             string hashedPassword = HashPassword(enteredPassword);
             return hashedPassword == storedHash;
         }
+        
+        private bool VerifyPassword(string enteredPassword,string stored,bool logAdmin)
+        {
+            return enteredPassword == stored;
+        }
 
         public static bool isLoggedIn()
         {
@@ -111,7 +119,7 @@ namespace venusTailwind
             {
                 HttpContext.Current.Session["usernameAdmin"] = ds.Tables[0].Rows[0][0].ToString();
                 HttpContext.Current.Session["isAdmin"] = true;
-                return VerifyPassword(pwd, ds.Tables[0].Rows[0][2].ToString());
+                return VerifyPassword(pwd, ds.Tables[0].Rows[0][2].ToString(),true);
             }
             else
             {
@@ -124,9 +132,9 @@ namespace venusTailwind
             CATEGORY SECTION 
         */
 
-        public int addCategory(string cnm, string desc)
+        public int addCategory(string cnm)
         {
-            cmd = new SqlCommand($"INSERT INTO Categories(category_name,description,is_active) VALUES('{cnm}','{desc}','{true}')", connection);
+            cmd = new SqlCommand($"INSERT INTO Categories(category_name,is_active) VALUES('{cnm}','{true}')", connection);
             int res = cmd.ExecuteNonQuery();
             return res;
         }
@@ -148,9 +156,9 @@ namespace venusTailwind
             return ds;
         }
 
-        public int updateCategory(int id, string cnm, string desc)
+        public int updateCategory(int id, string cnm)
         {
-            cmd = new SqlCommand($"UPDATE Categories SET category_name = '{cnm}' , description = '{desc}' WHERE category_id = '{id}' ", connection);
+            cmd = new SqlCommand($"UPDATE Categories SET category_name = '{cnm}' WHERE category_id = '{id}' ", connection);
             int res = cmd.ExecuteNonQuery();
             return res;
         }
@@ -356,11 +364,30 @@ namespace venusTailwind
 
         public DataSet selectProduct(int id)
         {
-            da = new SqlDataAdapter($"SELECT product_name , category_id , price , description , image_url from Products WHERE product_id = '{id}'", connection);
+            da = new SqlDataAdapter($"SELECT product_name , category_id , price , description , image_url from Products WHERE product_id = '{id}';", connection);
             ds = new DataSet();
             da.Fill(ds);
             return ds;
         }
+
+        //display product in shop page
+        public DataSet selectProducts()
+        {
+            da = new SqlDataAdapter($"SELECT product_name , category_id , price  , REPLACE(image_url,'../','') AS imageMain from Products;", connection);
+            ds = new DataSet();
+            da.Fill(ds);
+            return ds;
+        }
+        
+        public DataSet selectProducts(int catId)
+        {
+            da = new SqlDataAdapter($"SELECT product_name , category_id , price  , REPLACE(image_url,'../','') AS imageMain from Products WHERE category_id = '{catId}';", connection);
+            ds = new DataSet();
+            da.Fill(ds);
+            return ds;
+        }
+
+
     }
 }
 
