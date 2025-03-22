@@ -29,9 +29,8 @@ namespace venusTailwind
 
                 ds = db.selectProductdetails(id);
 
-                rptProduct.DataSource = ds.Tables[0];
+                rptProduct.DataSource = ds.Tables[0]; 
                 rptProduct.DataBind();
-
             }
         }
 
@@ -42,7 +41,6 @@ namespace venusTailwind
             Repeater rptOtherImages = (Repeater)e.Item.FindControl("rptOtherImages");
             rptOtherImages.DataSource = ds.Tables[0];
             rptOtherImages.DataBind();
-
         }
     }
 }

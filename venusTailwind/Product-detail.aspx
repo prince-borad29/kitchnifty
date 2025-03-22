@@ -10,30 +10,34 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
                     <!-- Product Gallery -->
-                    <div class="space-y-4">
+                    <div class="space-y-4 relative">
+                        <!-- Main Image -->
+                        <img id="imgProduct" src="<%# Eval("imageMain") %>"
+                            class="w-full max-w-full h-auto md:h-[460px] object-contain rounded-lg shadow-md bg-gray-100 p-2" />
 
-                        <%--<img id="mainImage" src="images/product-1.png" class="w-full h-[400px] object-contain rounded-lg shadow-md bg-gray-100 p-2" alt="Nordic Chair">--%>
-                        <asp:Image ID="imgProduct" runat="server" ImageUrl='<%#Eval("imageMain") %>' class="w-full h-[460px] object-contain rounded-lg shadow-md bg-gray-100 p-2" />
+                        <!-- Thumbnail Images -->
+                        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 sm:gap-4">
+                            <!-- Main Image Thumbnail -->
+                            <img src='<%# Eval("imageMain") %>' id="mainImg" alt="Product View"
+                                class="thumbnail w-16 h-16 sm:w-20 sm:h-20 cursor-pointer border-2 border-transparent rounded-lg hover:border-green-600">
 
-                        <div class="grid grid-cols-5 gap-4">
+                            <!-- Repeater for Other Images -->
                             <asp:Repeater ID="rptOtherImages" runat="server">
                                 <ItemTemplate>
-                                    <img src='<%#Eval("imageOther")%>' alt="Nordic Chair View"
-                                        class="thumbnail w-20 h-20 cursor-pointer border-2 border-transparent rounded-lg hover:border-green-600">
+                                    <asp:Image ID="OtherImage" runat="server" ImageUrl='<%#Eval("imageOther")%>'
+                                        class="thumbnail other-image w-16 h-16 sm:w-20 sm:h-20 cursor-pointer border-2 border-transparent rounded-lg hover:border-green-600" />
                                 </ItemTemplate>
                             </asp:Repeater>
                         </div>
-
                     </div>
+
 
                     <!-- Product Info -->
                     <div class="space-y-6">
-                        <%--<h2 class="text-3xl font-bold text-gray-900">Nordic Chair</h2>--%>
                         <asp:Label ID="lblProductName" runat="server" Text='<%#Eval("product_name") %>' class="text-3xl font-bold text-gray-900"></asp:Label>
                         <p>
                             ₹<asp:Label ID="lblPrice" runat="server" Text='<%#Eval("price") %>'></asp:Label>
                         </p>
-
 
                         <p class="text-gray-600">
                             <asp:Label ID="Label1" class="text-gray-600" runat="server" Text='<%#Eval("description") %>'></asp:Label>
@@ -54,17 +58,42 @@
                                 <video id="vid1" controls class="w-full h-full rounded-lg">
                                     <source src='<%#Eval("videoUrl") %>' type="video/mp4" />
                                     Your browser does not support the video tag.
+                               
                                 </video>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </ItemTemplate>
     </asp:Repeater>
 
-    <asp:Repeater ID="Repeater1" runat="server"></asp:Repeater>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // Select all other images inside the nested repeater
+
+            let otherImages = document.querySelectorAll(".other-image");
+            // Select the main product image
+            let mainImage = document.getElementById("imgProduct");
+            // Add click event listener to each other image
+
+            otherImages.forEach(function (img) {
+                img.addEventListener("click", function () {
+                    let newSrc = img.src; // Get clicked image's source
+                    mainImage.src = newSrc; // Set main image source to clicked image
+
+                });
+            });
+        });
+
+        document.getElementById("mainImg").addEventListener("click", function (e) {
+
+            let mainImage = document.getElementById("imgProduct");
+            mainImage.src = e.target.src;
+        });
+    </script>
+
     <%-- <script>
         function increaseQty(e) {
             e.preventDefault();

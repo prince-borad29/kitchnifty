@@ -20,6 +20,7 @@ namespace venusTailwind
                 fillCategory();
                 fillRepeater();
             }
+
         }
 
         void fillRepeater()
@@ -41,7 +42,7 @@ namespace venusTailwind
             ddlCategory.DataTextField = ds.Tables[0].Columns["category_name"].ToString();
             ddlCategory.DataValueField = ds.Tables[0].Columns["category_id"].ToString();
             ddlCategory.DataBind();
-            ddlCategory.Items.Insert(0,new ListItem("All","0"));
+            ddlCategory.Items.Insert(0, new ListItem("All", "0"));
         }
 
         protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
@@ -67,22 +68,61 @@ namespace venusTailwind
         {
             int id = Convert.ToInt32(e.CommandArgument);
 
-
-            // Store the image URL in Session (to keep URL clean)
-            //Session["ViewImage"] = args[0];
-
-            // Redirect using Query String for sharable product details
-            // Encode each value before creating the query string
+            // Encode id
             string id1 = HttpUtility.UrlEncode(id.ToString());
 
-            // Create query string safely
+            // Create query string 
             string queryString = $"id={id1}";
 
-            // Encrypt the entire query string
+            // Encrypt query string
             string encryptedValue = QueryStringEncryptionHelper.Encrypt(queryString);
 
-            // Redirect with encrypted value
+            // Redirect with query string
             Response.Redirect("Product-detail.aspx?data=" + encryptedValue);
+        }
+
+        protected void btnAddToCart_Command(object sender, CommandEventArgs e)
+        {
+            if (Session["uid"] != null)
+            {
+                int result = db.InsertCartData(Convert.ToInt32(Session["uid"]), Convert.ToInt32(e.CommandArgument), 1);
+
+                if (result > 0)
+                {
+                    Response.Write("Added Successfully");
+                }
+            }
+            else
+            {
+                Response.Redirect("Signin.aspx");
+            }
+        }
+
+        protected void rptProducts_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                HiddenField hfProductId = (HiddenField)e.Item.FindControl("hfProductId");
+                ImageButton addToCart = (ImageButton)e.Item.FindControl("btnAddToCart");
+                ImageButton goToCart = (ImageButton)e.Item.FindControl("btnGotoCart");
+
+                int productId = Convert.ToInt32(hfProductId.Value);
+                int count = db.CartItemCount(
+                    Convert.ToInt32(Session["uid"]),
+                    productId
+                    );
+
+                if (count > 0)
+                {
+                    addToCart.Visible = false;
+                    goToCart.Visible = true;
+                }
+            }
+        }
+
+        protected void btnGotoCart_Command(object sender, CommandEventArgs e)
+        {
+            //redirect to cart
         }
     }
 }

@@ -90,7 +90,7 @@
         </div>
     </div>--%>
 
-    <asp:Repeater ID="rptProducts" runat="server">
+    <asp:Repeater ID="rptProducts" runat="server" OnItemDataBound="rptProducts_ItemDataBound">
         <HeaderTemplate>
             <div class="untree_co-section product-section before-footer-section px-4 py-6">
                 <div class="container mx-auto">
@@ -108,9 +108,28 @@
                         <span class="text-green-600 font-bold">₹<%# Eval("price") %></span>
                     </div>
                     <div class="flex justify-between items-center mt-3 space-x-2">
-                        <asp:ImageButton ID="cartbtn" runat="server"
+                        <asp:HiddenField ID="hfProductId" Value='<%# Eval("product_id") %>' runat="server" />
+
+                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                            <ContentTemplate>
+                                <asp:ImageButton ID="btnAddToCart" runat="server"
                             ImageUrl="~/images/shopping-bag.png"
-                            class="btn bg-amber-500 hover:bg-amber-600 text-white font-semibold shadow-md px-4 py-2 rounded-lg" />
+                            OnCommand="btnAddToCart_Command"
+                            CommandArgument='<%# Eval("product_id") %>'
+                            class="btn bg-amber-500 hover:bg-green-600 text-white font-semibold shadow-md px-4 py-2 rounded-lg" />
+
+                        <asp:ImageButton ID="btnGotoCart" runat="server"
+                            ImageUrl="~/images/shopping-bag.png"
+                            OnCommand="btnGotoCart_Command"
+                            CommandArgument='<%# Eval("product_id") %>'
+                            class="btn bg-green-500 hover:bg-amber-600 text-white font-semibold shadow-md px-4 py-2 rounded-lg"
+                            Visible="false"/>
+                            </ContentTemplate>
+                             <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="btnAddToCart" EventName="Click" />
+                    <asp:AsyncPostBackTrigger ControlID="btnGotoCart" EventName="Click" />
+                </Triggers>
+                        </asp:UpdatePanel>
 
                         <asp:ImageButton ID="viewbtn" runat="server"
                             ImageUrl="~/images/view.png"
