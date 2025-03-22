@@ -106,7 +106,6 @@ namespace venusTailwind
 
             return false;
         }
-
         public bool loginAdmin(string eml, string pwd)
         {
             da = new SqlDataAdapter($"select username,email,password from admin where email='{eml}'", connection);
@@ -126,7 +125,6 @@ namespace venusTailwind
                 return false;
             }
         }
-
 
         /*
             CATEGORY SECTION 
@@ -165,7 +163,7 @@ namespace venusTailwind
 
         public int isActiveCat(int id, bool status)
         {
-            cmd = new SqlCommand($"UPDATE Categories SET is_activev = '{status}' WHERE category_id = '{id}' ", connection);
+            cmd = new SqlCommand($"UPDATE Categories SET is_active = '{status}' WHERE category_id = '{id}' ", connection);
             int res = cmd.ExecuteNonQuery();
             return res;
         }
@@ -286,7 +284,6 @@ namespace venusTailwind
         }
 
         //update Video
-
         public void updateVideo(int id, string video)
         {
             cmd = new SqlCommand($"update Products set video_url='{video}' where product_id='{id}';", connection);
@@ -389,11 +386,38 @@ namespace venusTailwind
 
         public DataSet selectProductdetails(int id)
         {
-            da = new SqlDataAdapter($"SELECT product_name , category_id , price , description , image_url,video_url from Products WHERE product_id = '{id}';", connection);
+            da = new SqlDataAdapter($"SELECT product_name , category_id , price , description , REPLACE(image_url,'../','') AS imageMain,REPLACE(video_url,'../','') AS videoUrl from Products WHERE product_id = '{id}';", connection);
             ds = new DataSet();
             da.Fill(ds);
             return ds;
         }
+
+        public DataSet selectProductImages(int id)
+        {
+            da = new SqlDataAdapter($"SELECT REPLACE(image_url,'../','') AS imageOther FROM productImages WHERE product_id = '{id}'",connection);
+            ds = new DataSet();
+            da.Fill(ds);
+            return ds;
+        }
+
+
+        /*Add To Cart 
+         Section Start */
+
+        public int InsertCartData(int user_id, int product_id, int quatity) {
+            cmd = new SqlCommand($"insert into Cart(user_id,product_id,quantity) Values('{user_id}','{product_id}','{quatity}');",connection);
+
+            return cmd.ExecuteNonQuery();
+        }
+
+        public int CartItemCount(int user_id,int product_id) {
+            cmd = new SqlCommand($"select Count(*) from Cart where user_id = '{user_id}' AND product_id='{product_id}'",connection);
+
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+            return count;
+        }
+
     }
 }
 

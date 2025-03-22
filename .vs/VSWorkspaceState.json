@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\venusTailwind"
+    "\\venusTailwind",
+    "\\venusTailwind\\Admin"
   ],
-  "SelectedNode": "\\venusTailwind\\DBConnect.cs",
+  "SelectedNode": "\\venusTailwind\\Product-detail.aspx",
   "PreviewInSolutionExplorer": false
 }

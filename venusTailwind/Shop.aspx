@@ -108,9 +108,39 @@
                         <span class="text-green-600 font-bold">₹<%# Eval("price") %></span>
                     </div>
                     <div class="flex justify-between items-center mt-3 space-x-2">
+                        <%
+                            if (Session["uid"] != null)
+                            {
+                                int productId = Convert.ToInt32(Eval("product_id"));
+                                venusTailwind.DBConnect db = new venusTailwind.DBConnect();
+
+                                int count = db.CartItemCount(
+                                    Convert.ToInt32(Session["uid"]),productId
+                                    );
+
+                                if (count > 0)
+                                {
+
+                        %>
                         <asp:ImageButton ID="cartbtn" runat="server"
                             ImageUrl="~/images/shopping-bag.png"
+                            OnCommand="cartbtn_Command"
+                            CommandArgument='<%# Eval("product_id") %>'
+                            class="btn bg-green-500 hover:bg-green-600 text-white font-semibold shadow-md px-4 py-2 rounded-lg" />
+
+                        <% }
+                            else
+                            {
+                        %>
+                        <asp:ImageButton ID="ImageButton1" runat="server"
+                            ImageUrl="~/images/shopping-bag.png"
+                            OnCommand="cartbtn_Command"
+                            CommandArgument='<%# Eval("product_id") %>'
                             class="btn bg-amber-500 hover:bg-amber-600 text-white font-semibold shadow-md px-4 py-2 rounded-lg" />
+                        <% 
+                                }
+                            }
+                        %>
 
                         <asp:ImageButton ID="viewbtn" runat="server"
                             ImageUrl="~/images/view.png"

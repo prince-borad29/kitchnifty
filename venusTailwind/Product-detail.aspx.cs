@@ -25,11 +25,22 @@ namespace venusTailwind
                 var queryParams = HttpUtility.ParseQueryString(decryptedValue);
 
                 int id = Convert.ToInt32(queryParams["id"]);// Extract price
+                ViewState["productId"] = id;
 
                 ds = db.selectProductdetails(id);
 
-                
+                rptProduct.DataSource = ds.Tables[0]; 
+                rptProduct.DataBind();
             }
+        }
+
+        protected void rptProduct_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            ds = db.selectProductImages(Convert.ToInt32(ViewState["productId"]));
+
+            Repeater rptOtherImages = (Repeater)e.Item.FindControl("rptOtherImages");
+            rptOtherImages.DataSource = ds.Tables[0];
+            rptOtherImages.DataBind();
         }
     }
 }

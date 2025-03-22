@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="Category.aspx.cs" Inherits="venusTailwind.Admin.Category" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -87,14 +88,12 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Edit">
+                            <asp:TemplateField HeaderText="Action">
                                 <ItemTemplate>
-                                    <asp:LinkButton ID="btnEdit" runat="server" CommandArgument='<%# Eval("category_id") %>' CommandName="cmd_edt" OnCommand="btnEdit_Command" >Edit</asp:LinkButton>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Delete">
-                                <ItemTemplate>
-                                    <asp:LinkButton ID="btnDelete" runat="server" CommandArgument='<%# Eval("category_id") %>' CommandName="cmd_dlt" OnCommand="btnDelete_Command">Delete</asp:LinkButton>
+                                    <div class="btn-group w-100" role="group">
+                                        <asp:LinkButton ID="btnEdit" runat="server" CommandArgument='<%# Eval("category_id") %>' CommandName="cmd_edt" OnCommand="btnEdit_Command" CssClass="btn btn-outline-primary btn-sm" title="Edit"><i class="bi bi-pencil-square"></i></asp:LinkButton>
+                                        <asp:LinkButton ID="btnDelete" runat="server" CommandArgument='<%# Eval("category_id") %>' CommandName="cmd_dlt" OnCommand="btnDelete_Command" CssClass="btn btn-outline-danger btn-sm" title="Delete"><i class="bi bi-trash"></i></asp:LinkButton>
+                                    </div>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>

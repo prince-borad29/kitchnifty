@@ -20,6 +20,7 @@ namespace venusTailwind
                 fillCategory();
                 fillRepeater();
             }
+
         }
 
         void fillRepeater()
@@ -41,7 +42,7 @@ namespace venusTailwind
             ddlCategory.DataTextField = ds.Tables[0].Columns["category_name"].ToString();
             ddlCategory.DataValueField = ds.Tables[0].Columns["category_id"].ToString();
             ddlCategory.DataBind();
-            ddlCategory.Items.Insert(0,new ListItem("All","0"));
+            ddlCategory.Items.Insert(0, new ListItem("All", "0"));
         }
 
         protected void ddlCategory_SelectedIndexChanged(object sender, EventArgs e)
@@ -83,6 +84,22 @@ namespace venusTailwind
 
             // Redirect with encrypted value
             Response.Redirect("Product-detail.aspx?data=" + encryptedValue);
+        }
+
+        protected void cartbtn_Command(object sender, CommandEventArgs e)
+        {
+            if (Session["uid"] != null)
+            {
+                int result = db.InsertCartData(Convert.ToInt32(Session["uid"]), Convert.ToInt32(e.CommandArgument), 1);
+
+                if (result > 0)
+                {
+                    Response.Write("Added Successfully");
+                }
+            }
+            else {
+                Response.Redirect("Signin.aspx");
+            }
         }
     }
 }
